@@ -45,7 +45,7 @@ public class Shooter extends SubsystemBase {
       masterTalon.config_kF(0, Constants.shooter_kF);
     }
     public double getFlywheelVelocity(){
-      return masterTalon.getSelectedSensorVelocity();
+      return masterTalon.getSelectedSensorVelocity(); //kkkkkkk
     }
     @Override
     public void periodic() {
