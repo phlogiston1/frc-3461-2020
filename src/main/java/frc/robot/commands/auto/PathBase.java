@@ -14,8 +14,10 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
@@ -29,13 +31,16 @@ public class PathBase extends CommandBase {
     DriveTrain driveTrain;
     Trajectory trajectory_;
     DifferentialDriveVoltageConstraint autoVoltageConstraint;
+    RamseteCommand ramsete;
 
     public PathBase(DriveTrain subsystem) {
         driveTrain = subsystem;
         addRequirements(subsystem);
         setVoltageConstraint(Constants.auto_maxvoltage);
     }
-
+    public Command getPathbaseCommand(){
+        return this;
+    }
     public void setVoltageConstraint(double voltage) {
         autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(Constants.odo_kS, Constants.odo_kV, Constants.odo_kA), RobotContainer.robotState.kinematics,
@@ -48,8 +53,12 @@ public class PathBase extends CommandBase {
     public void setTrajectory(Trajectory trajectory){
         trajectory_ = trajectory;
     }
+    public TrajectoryConfig getTrajectoryConfig(){
+        return new TrajectoryConfig(Constants.auto_maxspeed, Constants.auto_maxacceleration)
+        .setKinematics(RobotContainer.robotState.kinematics).addConstraint(autoVoltageConstraint);
+    }
    public void run(){
-    RamseteCommand ramsete = new RamseteCommand(
+    ramsete = new RamseteCommand(
         trajectory_, 
         RobotContainer.robotState::getCurrentPose,
         new RamseteController(0, 0),
@@ -66,5 +75,8 @@ public class PathBase extends CommandBase {
     );
 
 ramsete.andThen(() -> driveTrain.voltageDrive(0,0));
+   }
+   public Command getAutoCommand(){
+       return ramsete;
    }
 }

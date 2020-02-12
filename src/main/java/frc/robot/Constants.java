@@ -21,7 +21,9 @@ public final class Constants {
                             DRIVE_RIGHT_1 = 2,
                             DRIVE_RIGHT_2 = 3,
                             PIGEON_IMU = 4,
-                            TURRET_PORT = 0;
+                            TURRET_PORT = 5,
+                            SHOOTER_MOTOR_1 = 6,
+                            SHOOTER_MOTOR_2 = 7;
     public static final double DRIVETRAIN_TRACKWIDTH = 0.6, // all these need to be updated + idk what units yet. all will prob be meters.
                                 CAMERA_ANGLE = 0,
                                 CAMERA_HEIGHT = 0.5,
@@ -41,6 +43,10 @@ public final class Constants {
                          odo_kS               = 1.37,
                          odo_kV               = 1.15,
                          odo_kA               = 0.147,
-                         odo_kP               = 14.9;
+                         odo_kP               = 14.9,
+                         shooter_kP           = 0,
+                         shooter_kI           = 0,
+                         shooter_kD           = 0,
+                         shooter_kF           = 0;
     
 }
