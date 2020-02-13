@@ -28,9 +28,9 @@ public class Test {
         System.out.println(PolarPoint2d.getCartesianPoint(point4).toString());
         System.out.println("Target test:");
         PolarPoint2d target = new PolarPoint2d(4, Rotation2d.fromDegrees(20 + 90));
-        System.out.println("Outer target location 4m away, 20 degrees " + target.toString());
+        System.out.println("Outer target location 4m away, 20 degrees, " + target.toString());
         target.cartesianTransform(0, 0.5);
-        System.out.println("new target angle " + (target.getRotation2dP().getDegrees() - 90));
-        System.out.println("inner target info " + target.toString());
+        System.out.println("new target angle: " + (target.getRotation2dP().getDegrees() - 90));
+        System.out.println("inner target info: " + target.toString());
     }
 }
