@@ -13,6 +13,7 @@ import frc.lib.math.PolarPoint2d;
 import frc.robot.Constants;
 import frc.robot.Limelight;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turret;
 
 public class AutoAim extends CommandBase {
@@ -27,12 +28,14 @@ public class AutoAim extends CommandBase {
   boolean resetTimer = true;
   Limelight camera_;
   double timeSinceAquiredTarget;
+  DriveTrain driveTrain;
   Timer timer = new Timer();
-  public AutoAim(Turret subsystem, Limelight camera) {
+  public AutoAim(Turret subsystem, DriveTrain dt, Limelight camera) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     turret = subsystem;
     camera_ = camera;
+    driveTrain = dt;
   }
 
   // Called when the command is initially scheduled.
@@ -57,6 +60,7 @@ public class AutoAim extends CommandBase {
     if(cameraAim){
       camera_.setLedOn();
       camera_.setModeVision();
+      timer.start();
     }else{
       camera_.setLedOff();
       camera_.setModeDrive();
@@ -66,7 +70,18 @@ public class AutoAim extends CommandBase {
     integral += error * kI;
     double PIDOut = kP * error + kD * (error - prevError) + integral;
     if(turret.autoAiming){
+      if(driveBaseAim){
+        driveTrain.percentageDrive(-PIDOut, PIDOut);
+      }
       turret.setSpeed(PIDOut);
+    }
+    if(timer.hasPeriodPassed(0.2) && error > 0.02){
+      driveBaseAim = true;
+    }
+    if(error < 0.02){
+      driveBaseAim = false;
+      timer.stop();
+      timer.reset();
     }
   }
 
