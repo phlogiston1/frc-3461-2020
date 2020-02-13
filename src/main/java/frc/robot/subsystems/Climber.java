@@ -7,16 +7,27 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase {
   /**
    * Creates a new Climber.
    */
-  public Climber() {
-
+  DriveTrain driveTrain;
+  DoubleSolenoid pto = new DoubleSolenoid(2,3);
+  public Climber(DriveTrain dt) {
+    driveTrain = dt;
   }
-
+  public void engaguePTO(boolean engagued){
+    if(engagued){
+      pto.set(Value.kForward);
+    }else{
+      pto.set(Value.kReverse);
+    }
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
