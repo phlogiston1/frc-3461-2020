@@ -48,5 +48,6 @@ public final class Constants {
                          shooter_kI           = 0,
                          shooter_kD           = 0,
                          shooter_kF           = 0;
-    
+    public static double[] limelightSamples = {0,2,5,7,30,45}; //some data in degrees
+    public static double[] limelightSampleDistances = {0,1,2,3,4,5}; //some data in meters
 }

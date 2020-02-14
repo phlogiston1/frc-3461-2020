@@ -6,14 +6,14 @@ import frc.lib.math.jama.*;
 * from https://github.com/tjrantal/CubicSplineInterpolation/blob/master/CubicSplineInterpolate.java with some modifications.
 */
 public class CubicSplineInterpolate{
-	static double[] samplingInstants_;
-	static double[] sampledValues_;
+	double[] samplingInstants_;
+	double[] sampledValues_;
 	
-	public static void setSamples(double[] samplingInstants, double[] sampledValues){
+	public void setSamples(double[] samplingInstants, double[] sampledValues){
 		samplingInstants_ = samplingInstants;
 		sampledValues_ = sampledValues;
 	}
-	public static double cubicSplineInterpolate(double interpolationInstant){
+	public double cubicSplineInterpolate(double interpolationInstant){
 		double[][] a = new double[sampledValues_.length][sampledValues_.length];
 		double[] b = new double[sampledValues_.length];
 		double[] bb = new double[sampledValues_.length-1];
@@ -106,14 +106,11 @@ public class CubicSplineInterpolate{
 				knownValues[i] = Math.sin(2d*Math.PI*sigFreq*interpolatedSamplingInstants[i]);
 			}
 		}
-		setSamples(samplingInstants, sampledValues);
 		double[] interpolatedValues = cubicSplineInterpolate(samplingInstants,sampledValues,interpolatedSamplingInstants);
-		double interpolatedValue = cubicSplineInterpolate(interpolatedSamplingInstants[interpolatedSamplingInstants.length - 1]);
 		/*Print out the result*/
 		for (int i = 0; i< interpolatedValues.length;++i){
 			System.out.println("si\t"+String.format("%.3f",samplingInstants[i])+"\tKnown\t"+String.format("%.2f",sampledValues[i])+"\tsi\t"+String.format("%.3f",interpolatedSamplingInstants[i])+"\tKnown\t"+String.format("%.2f",knownValues[i])+"\tinterp\t"+String.format("%.2f",interpolatedValues[i]));
 		}
-		System.out.println(interpolatedValue);
 		
 	}	
 }

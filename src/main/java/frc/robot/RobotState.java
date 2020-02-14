@@ -28,11 +28,15 @@ import frc.robot.subsystems.DriveTrain;
  * RobotState calculates positions of the robot and target.
  */
 public class RobotState {
+    //odometry
     public DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DRIVETRAIN_TRACKWIDTH);
     public DifferentialDriveOdometry odometry;
     public PigeonIMU pigeon = new PigeonIMU(Constants.PIGEON_IMU);
     public DriveTrain driveTrain;
+    double[] ypr = new double[3];
+    //vision
     public Limelight camera;
+    //color sensor
     I2C.Port i2cPort = I2C.Port.kOnboard;
     public ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     public final ColorMatch colorMatcher = new ColorMatch();
@@ -45,17 +49,24 @@ public class RobotState {
     public static ColorMatchResult match;
     public static String colorString;
     String goalColorString = "Not Recieved";
-    
-    double[] ypr = new double[3];
+    /**
+     * initialize robotstate
+     * @param dt the drive train for odometry
+     * @param l the limelight for vision
+     */
     public RobotState(DriveTrain dt, Limelight l){
         driveTrain = dt;
         camera = l;
+        //add target colors to color matcher.
         colorMatcher.addColorMatch(kBlueTarget);
         colorMatcher.addColorMatch(kGreenTarget);
         colorMatcher.addColorMatch(kRedTarget);
         colorMatcher.addColorMatch(kYellowTarget);
     }
     //odometry state
+    /**
+     * update odometry and color sensor, and check the gamespecificmessage to see if the color to spin to has been sent yet.
+     */
     public void update(){
         pigeon.getYawPitchRoll(ypr); //update the ypr
         odometry.update(Rotation2d.fromDegrees(getHeading()), driveTrain.lEncoderPosition(), driveTrain.rEncoderPosition());
@@ -112,28 +123,59 @@ public class RobotState {
     //Code for no data received yet
     }
 }
+    /**
+     * get the current location of the robot
+     * @return the current pose in meters
+     */
     public Pose2d getCurrentPose(){
         return odometry.getPoseMeters();
     }
+    /**
+     * reset the odometry of the robot by giving it a new pose that it will treat as it's current location.
+     * @param pose the new pose where the robot is
+     */
     public void resetOdometry(Pose2d pose){
         driveTrain.resetEncoders();
         odometry.resetPosition(pose,Rotation2d.fromDegrees(getHeading()));
     }
+    /**
+     * get the average distance of the robot.
+     * @return the average encoder distance in ticks
+     */
     public double getAverageEncoderDistance(){
         return (driveTrain.lEncoderPosition() + driveTrain.rEncoderPosition()) / 2.0;
     }
+    /**
+     * zero the robots heading.
+     */
     public void zeroHeading(){
         pigeon.setFusedHeading(0);
     }
+    /**
+     * get the robots yaw from the pigeon.
+     * @return the yaw in degrees
+     */
     public double getYaw(){
         return ypr[0];
     }
+    /**
+     * get the robots pitch from the pigeon.
+     * @return the pitch in degrees
+     */
     public double getPitch(){
         return ypr[1];
     }
+    /**
+     * get the robots roll from the pigeon.
+     * @return the roll in degrees
+     */
     public double getRoll(){
         return ypr[2];
     }
+    /**
+     * get the fused accelerometer and magnometer heading from the pigeon
+     * @return the heading in degrees
+     */
     public double getHeading(){
         return pigeon.getFusedHeading();
     }
