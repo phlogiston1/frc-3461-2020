@@ -37,6 +37,7 @@ public class AutoBase extends CommandBase{
                 while(!action.isFinished()){}
             }
         }
+        active = false;
     }
     public void stop(){
         active = false;
