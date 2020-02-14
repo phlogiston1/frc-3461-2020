@@ -22,13 +22,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.commands.auto.actions.ActionBase;
+import frc.robot.commands.auto.actions.Action;
 import frc.robot.subsystems.DriveTrain;
 
 /**
- * Add your docs here.
+ * Code to drive a path. simplifies writing new paths. Just use setTrajectory(trajectory) and then 
+ * call start() when you want to drive the path.
  */
-public class PathBase extends CommandBase implements ActionBase{
+public class PathBase extends CommandBase implements Action{
     DriveTrain driveTrain;
     Trajectory trajectory_;
     DifferentialDriveVoltageConstraint autoVoltageConstraint;
@@ -36,24 +37,33 @@ public class PathBase extends CommandBase implements ActionBase{
     public boolean finished = false;
 
     public PathBase(DriveTrain subsystem) {
-        driveTrain = subsystem;
-        setVoltageConstraint(Constants.auto_maxvoltage);
+        driveTrain = subsystem; //we need to have the drive base for the ramsete command.
+        setVoltageConstraint(Constants.auto_maxvoltage); //set the initial voltage constraint.
     }
-    public Command getPathbaseCommand(){
+
+    //get the PathBase from a path.
+    public Command getPathbaseCommand(){ 
         return this;
     }
-    public void setVoltageConstraint(double voltage) {
+
+    //reset the voltage constraint.
+    public void setVoltageConstraint(double voltage) { 
         autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(Constants.odo_kS, Constants.odo_kV, Constants.odo_kA), RobotContainer.robotState.kinematics,
                 Constants.auto_maxvoltage);
     }
 
+    //get a trajectory from a pathweaver json.
     public Trajectory getPathweaverTrajectory(String uri) throws IOException {
         return TrajectoryUtil.fromPathweaverJson(Paths.get(uri));
     }
+
+    //set the trajectory of the path.
     public void setTrajectory(Trajectory trajectory){
         trajectory_ = trajectory;
     }
+
+    //get the trajectory config of the path. This is needed to manually create a trajectory from a list of poses.
     public TrajectoryConfig getTrajectoryConfig(){
         return new TrajectoryConfig(Constants.auto_maxspeed, Constants.auto_maxacceleration)
         .setKinematics(RobotContainer.robotState.kinematics).addConstraint(autoVoltageConstraint);

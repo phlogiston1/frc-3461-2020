@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CodeLens (Launch) - CubicSplineInterpolate",
+      "request": "launch",
+      "mainClass": "frc.lib.math.CubicSplineInterpolate",
+      "projectName": "PEACCE2020.1"
+    },
+    {
+      "type": "java",
       "name": "CodeLens (Launch) - Test",
       "request": "launch",
       "mainClass": "frc.lib.math.Test",
