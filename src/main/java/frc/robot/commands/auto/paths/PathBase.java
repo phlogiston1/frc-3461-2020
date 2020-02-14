@@ -36,38 +36,60 @@ public class PathBase extends CommandBase implements Action{
     RamseteCommand ramsete;
     public boolean finished = false;
 
+    /**
+     * create a new PathBase instance.
+     * @param subsystem we need to have the drive base for the ramsete command.
+     */
     public PathBase(DriveTrain subsystem) {
-        driveTrain = subsystem; //we need to have the drive base for the ramsete command.
+        driveTrain = subsystem;
         setVoltageConstraint(Constants.auto_maxvoltage); //set the initial voltage constraint.
     }
 
-    //get the PathBase from a path.
+    /**
+     * get the PathBase from a path.
+     * @return PathBase
+     */
     public Command getPathbaseCommand(){ 
         return this;
     }
 
-    //reset the voltage constraint.
+    /**
+     * reset the voltage constraint.
+     * @param voltage the voltage to limit to.
+     */
     public void setVoltageConstraint(double voltage) { 
         autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(Constants.odo_kS, Constants.odo_kV, Constants.odo_kA), RobotContainer.robotState.kinematics,
                 Constants.auto_maxvoltage);
     }
 
-    //get a trajectory from a pathweaver json.
+    /**
+     * get a trajectory from a pathweaver json.
+     * @param uri the location of the pathweaver json
+     * @return a trajectory
+     * @throws IOException
+     */
     public Trajectory getPathweaverTrajectory(String uri) throws IOException {
         return TrajectoryUtil.fromPathweaverJson(Paths.get(uri));
     }
 
-    //set the trajectory of the path.
+    /**
+     * set the trajectory of the path.
+     * @param trajectory the trajectory to add
+     */
     public void setTrajectory(Trajectory trajectory){
         trajectory_ = trajectory;
     }
 
-    //get the trajectory config of the path. This is needed to manually create a trajectory from a list of poses.
+    /**
+     * get the trajectory config of the path. This is needed to manually create a trajectory from a list of poses.
+     */
     public TrajectoryConfig getTrajectoryConfig(){
         return new TrajectoryConfig(Constants.auto_maxspeed, Constants.auto_maxacceleration)
         .setKinematics(RobotContainer.robotState.kinematics).addConstraint(autoVoltageConstraint);
     }
+
+    //get the ramsete command for the path
    public Command getAutoCommand(){
        return ramsete;
    }
@@ -87,6 +109,9 @@ public class PathBase extends CommandBase implements Action{
 
     }
 
+    /**
+     * run the ramsete command.
+     */
     @Override
     public void start() {
         ramsete = new RamseteCommand(

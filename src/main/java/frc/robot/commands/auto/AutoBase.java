@@ -14,20 +14,34 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.auto.actions.Action;
 
 /**
- * Add your docs here.
+ * Complete auto framework. An auto is built by adding actions to a stack. Then call run to start and
+ * run each action from the top of the stack to the bottom.
+ * runAction() from team 254.
  */
 public class AutoBase extends CommandBase{
-    List<Action> actions = new ArrayList<Action>();
-    List<Object> timing = new ArrayList<Object>();
+    private List<Action> actions = new ArrayList<Action>();
+    private List<Object> timing = new ArrayList<Object>();
     private boolean active;
     protected double mUpdateRate = 1.0 / 50.0;
+
+
     public AutoBase(){
         
     }
+
+    /**
+     * add an action to the stack
+     * @param action The action to add
+     * @param time Timing to tell whether to run with the next action, or before.
+     */
     public void addAction(Action action, Timing time) {
         actions.add(action);
         timing.add(timing);
     }
+
+    /**
+     * run the stack.
+     */
     public void run(){
         active = true;
         for(int i = 0; i < actions.size(); i++){
@@ -39,15 +53,33 @@ public class AutoBase extends CommandBase{
         }
         active = false;
     }
+
+    /**
+     * stop running
+     */
     public void stop(){
         active = false;
     }
+
+    /**
+     * is auto running
+     * @return boolean;
+     */
     public boolean isActive(){
         return active;
     }
+
+    /**
+     * print "Auto done"
+     */
     public void done(){
         System.out.println("Auto done");
     }
+
+    /**
+     * team 254's runAction. starts and updates an action until it is finished or stopped.
+     * @param action the action to run
+     */
     public void runAction(Action action){
         action.start();
         while(isActive() && !action.isFinished()){
@@ -61,6 +93,9 @@ public class AutoBase extends CommandBase{
         }
     }
     public enum Timing{
+        /**
+         * enum for whether to run actions sequentially or in parralel/
+         */
         SEQUENTIAL,
         PARRALEL;
     }

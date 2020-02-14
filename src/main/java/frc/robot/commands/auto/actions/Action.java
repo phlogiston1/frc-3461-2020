@@ -8,7 +8,7 @@
 package frc.robot.commands.auto.actions;
 
 /**
- * Add your docs here.
+ * Team 254's action interface.
  */
 public interface Action{
     boolean isFinished();

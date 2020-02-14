@@ -8,7 +8,7 @@
 package frc.robot.commands.auto.actions;
 
 /**
- * Add your docs here.
+ * Nothing at all... yet
  */
 public class AimAndShoot implements Action{
 

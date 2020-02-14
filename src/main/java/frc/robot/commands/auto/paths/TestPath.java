@@ -16,11 +16,19 @@ import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.subsystems.DriveTrain;
 
 /**
- * Add your docs here.
+ * Testing the PathBase framework. just call start on this to drive the path.
  */
 public class TestPath extends PathBase{
+    /**
+     * creates a new trajectory,
+     * and then sets it in the PathBase as the one to follow.
+     * Call start on this to drive the path.
+     * @param subsystem drive train to pass to PathBase
+     */
     public TestPath(DriveTrain subsystem) {
         super(subsystem);
+
+        //create a new trajectory
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0,0,new Rotation2d(0)), 
         List.of(
@@ -30,6 +38,7 @@ public class TestPath extends PathBase{
         new Pose2d(1.5,0, new Rotation2d(0)),
         getTrajectoryConfig()
         );
+        //set the trajectory
         setTrajectory(trajectory);
 	}
 }

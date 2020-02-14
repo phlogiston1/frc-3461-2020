@@ -12,9 +12,13 @@ import frc.robot.commands.auto.paths.TestPath;
 import frc.robot.subsystems.DriveTrain;
 
 /**
- * Add your docs here.
+ * A file to test the auto framework.
  */
 public class TestAuto extends AutoBase{
+    /**
+     * add actions to the stack. call run on this to start auto.
+     * @param dt the drive train to run the ramsete command on.
+     */
     public TestAuto(DriveTrain dt){
         addAction(new TestPath(dt), Timing.SEQUENTIAL);
         addAction(new AimAndShoot(), Timing.SEQUENTIAL);
