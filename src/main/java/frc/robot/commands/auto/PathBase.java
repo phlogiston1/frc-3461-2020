@@ -22,16 +22,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.auto.actions.ActionBase;
 import frc.robot.subsystems.DriveTrain;
 
 /**
  * Add your docs here.
  */
-public class PathBase extends CommandBase {
+public class PathBase extends CommandBase implements ActionBase{
     DriveTrain driveTrain;
     Trajectory trajectory_;
     DifferentialDriveVoltageConstraint autoVoltageConstraint;
     RamseteCommand ramsete;
+    public boolean finished = false;
 
     public PathBase(DriveTrain subsystem) {
         driveTrain = subsystem;
@@ -57,8 +59,28 @@ public class PathBase extends CommandBase {
         return new TrajectoryConfig(Constants.auto_maxspeed, Constants.auto_maxacceleration)
         .setKinematics(RobotContainer.robotState.kinematics).addConstraint(autoVoltageConstraint);
     }
-   public void run(){
-    ramsete = new RamseteCommand(
+   public Command getAutoCommand(){
+       return ramsete;
+   }
+
+    @Override
+    public boolean isFinished() {
+        return finished;
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void done() {
+
+    }
+
+    @Override
+    public void start() {
+        ramsete = new RamseteCommand(
         trajectory_, 
         RobotContainer.robotState::getCurrentPose,
         new RamseteController(0, 0),
@@ -75,8 +97,6 @@ public class PathBase extends CommandBase {
     );
 
 ramsete.andThen(() -> driveTrain.voltageDrive(0,0));
-   }
-   public Command getAutoCommand(){
-       return ramsete;
-   }
+finished = true;
+    }
 }

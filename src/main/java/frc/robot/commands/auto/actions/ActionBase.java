@@ -7,13 +7,12 @@
 
 package frc.robot.commands.auto.actions;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
 /**
  * Add your docs here.
  */
-public class ActionBase extends CommandBase{
-    public ActionBase(){
-        
-    }
+public interface ActionBase{
+    boolean isFinished();
+    void update();
+    void done();
+    void start();
 }

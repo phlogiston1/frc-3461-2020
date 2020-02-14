@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
 
     //schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.run();
+      m_autonomousCommand.start();
     }
   }
 
