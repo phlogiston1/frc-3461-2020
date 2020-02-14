@@ -38,7 +38,7 @@ public class CubicSplineInterpolate{
 		}
 		double interpolatedSample;
 		double inter;
-		/*Reconstruc the interpolated signal*/
+		/*Reconstruct the interpolated signal*/
 		int j = 0;
 		while (samplingInstants_[j+1]<interpolationInstant){
 			++j;
@@ -80,7 +80,7 @@ public class CubicSplineInterpolate{
 		}
 		double[] interpolatedSamples = new double[interpolationInstants.length];
 		double inter;
-		/*Reconstruc the interpolated signal*/
+		/*Reconstruct the interpolated signal*/
 		int j = 0;
 		for (int i = 0;i<interpolationInstants.length;++i){
 			while (samplingInstants[j+1]<interpolationInstants[i]){
