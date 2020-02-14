@@ -18,6 +18,5 @@ public class TestAuto extends AutoBase{
     public TestAuto(DriveTrain dt){
         addAction(new TestPath(dt), Timing.SEQUENTIAL);
         addAction(new AimAndShoot(), Timing.SEQUENTIAL);
-        run();
     }
 }

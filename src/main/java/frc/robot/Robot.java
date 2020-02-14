@@ -9,7 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.auto.PathBase;
+import frc.robot.commands.auto.paths.PathBase;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

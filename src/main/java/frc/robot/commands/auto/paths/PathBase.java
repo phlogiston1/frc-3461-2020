@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.auto;
+package frc.robot.commands.auto.paths;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -37,7 +37,6 @@ public class PathBase extends CommandBase implements ActionBase{
 
     public PathBase(DriveTrain subsystem) {
         driveTrain = subsystem;
-        addRequirements(subsystem);
         setVoltageConstraint(Constants.auto_maxvoltage);
     }
     public Command getPathbaseCommand(){

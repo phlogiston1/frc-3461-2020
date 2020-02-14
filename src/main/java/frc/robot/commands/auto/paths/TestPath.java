@@ -12,7 +12,7 @@ import java.util.List;
 import edu.wpi.first.wpilibj.geometry.*;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import frc.robot.commands.auto.PathBase;
+import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.subsystems.DriveTrain;
 
 /**

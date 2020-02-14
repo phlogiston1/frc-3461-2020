@@ -15,10 +15,8 @@ public class Climber extends SubsystemBase {
   /**
    * Creates a new Climber.
    */
-  DriveTrain driveTrain;
   DoubleSolenoid pto = new DoubleSolenoid(2,3);
   public Climber(DriveTrain dt) {
-    driveTrain = dt;
   }
   public void engaguePTO(boolean engagued){
     if(engagued){
