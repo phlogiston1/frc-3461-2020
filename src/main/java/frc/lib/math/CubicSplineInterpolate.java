@@ -8,7 +8,6 @@ import frc.lib.math.jama.*;
 public class CubicSplineInterpolate{
 	double[] samplingInstants_;
 	double[] sampledValues_;
-	
 	public void setSamples(double[] samplingInstants, double[] sampledValues){
 		samplingInstants_ = samplingInstants;
 		sampledValues_ = sampledValues;
@@ -47,7 +46,6 @@ public class CubicSplineInterpolate{
 		interpolatedSample = sampledValues_[j]+bb[j]*inter+c.get(j,0)*Math.pow(inter,2.0)+d[j]*Math.pow(inter,3.0);
 		return interpolatedSample;
 	}
-	
 	/**
 		Method for cubic spline interpolation. Cannot remember which sources I used for the maths, but likely likely something like  http://en.wikipedia.org/wiki/Spline_interpolation and http://mathworld.wolfram.com/CubicSpline.html
 		@param samplingInstants, a 1D array of sampling instants
