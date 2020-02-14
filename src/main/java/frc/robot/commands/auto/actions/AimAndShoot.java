@@ -10,7 +10,7 @@ package frc.robot.commands.auto.actions;
 /**
  * Add your docs here.
  */
-public class AimAndShoot implements ActionBase{
+public class AimAndShoot implements Action{
 
     @Override
     public boolean isFinished() {

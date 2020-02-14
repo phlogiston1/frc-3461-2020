@@ -10,7 +10,7 @@ package frc.robot.commands.auto.actions;
 /**
  * Add your docs here.
  */
-public interface ActionBase{
+public interface Action{
     boolean isFinished();
     void update();
     void done();
