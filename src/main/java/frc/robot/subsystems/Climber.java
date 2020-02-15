@@ -18,8 +18,8 @@ public class Climber extends SubsystemBase {
   DoubleSolenoid pto = new DoubleSolenoid(2,3);
   public Climber(DriveTrain dt) {
   }
-  public void engaguePTO(boolean engagued){
-    if(engagued){
+  public void engagePTO(boolean engaged){
+    if(engaged){
       pto.set(Value.kForward);
     }else{
       pto.set(Value.kReverse);

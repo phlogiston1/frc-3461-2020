@@ -15,9 +15,9 @@ import frc.robot.commands.ArcadeDrive;
 
 public class DriveTrain extends SubsystemBase {
     public WPI_TalonFX lFalcon1 = new WPI_TalonFX(Constants.DRIVE_LEFT_1);
-    public WPI_TalonFX lFalcon2 = new WPI_TalonFX(Constants.DRIVE_LEFT_1);
-    public WPI_TalonFX rFalcon1 = new WPI_TalonFX(Constants.DRIVE_LEFT_1);
-    public WPI_TalonFX rFalcon2 = new WPI_TalonFX(Constants.DRIVE_LEFT_1);
+    public WPI_TalonFX lFalcon2 = new WPI_TalonFX(Constants.DRIVE_LEFT_2);
+    public WPI_TalonFX rFalcon1 = new WPI_TalonFX(Constants.DRIVE_RIGHT_1);
+    public WPI_TalonFX rFalcon2 = new WPI_TalonFX(Constants.DRIVE_RIGHT_2);
     public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
     private Gear _gear = Gear.LOW_GEAR;
     double[] ypr = new double[3];
@@ -29,7 +29,7 @@ public class DriveTrain extends SubsystemBase {
         //TODO: make sure motors arent fighting
         lFalcon1.setInverted(false);
         lFalcon2.setInverted(InvertType.FollowMaster);
-        rFalcon1.setInverted(false);
+        rFalcon1.setInverted(true);
         rFalcon2.setInverted(InvertType.FollowMaster);
         //set neutral modes:
         setNeutralModes(NeutralMode.Brake);

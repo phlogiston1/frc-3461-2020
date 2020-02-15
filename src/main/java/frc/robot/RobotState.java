@@ -62,6 +62,7 @@ public class RobotState {
         colorMatcher.addColorMatch(kGreenTarget);
         colorMatcher.addColorMatch(kRedTarget);
         colorMatcher.addColorMatch(kYellowTarget);
+        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     }
     //odometry state
     /**

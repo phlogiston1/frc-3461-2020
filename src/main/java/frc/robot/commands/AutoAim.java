@@ -55,7 +55,7 @@ public class AutoAim extends CommandBase {
     double errorFromVision = RobotContainer.robotState.innerTargetAngleFromCamera();
     double errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.robotState.getCurrentPose()).getP();
     double error = (cameraAim ? errorFromVision : errorFromOdometry) - turret.getPosition();
-    double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.robotState.targetDistanceFromCamera());
+    //double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.robotState.targetDistanceFromCamera());
     if(driveBaseAim){
       kP = Constants.DRIVEBASE_AUTOAIM_kP;
       kI = Constants.DRIVEBASE_AUTOAIM_kI;

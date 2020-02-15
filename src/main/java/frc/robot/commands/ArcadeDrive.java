@@ -22,6 +22,7 @@ public class ArcadeDrive extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
     _drive = driveTrain;
+    System.out.println("arcadeDrive");
   }
 
   // Called when the command is initially scheduled.
@@ -38,7 +39,7 @@ public class ArcadeDrive extends CommandBase {
       y /= 2;
       x /= 2;
     }
-    _drive.percentageDrive(y + x, y - x);
+    _drive.percentageDrive(y - x, y + x);
     if(drvJoy.getRawButton(1)){
       _drive.shift(Gear.HIGH_GEAR);
     }else{
