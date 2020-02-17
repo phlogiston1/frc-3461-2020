@@ -20,13 +20,12 @@ import frc.robot.commands.auto.actions.Action;
  */
 public class AutoBase extends CommandBase{
     private List<Action> actions = new ArrayList<Action>();
-    private List<Object> timing = new ArrayList<Object>();
+    private List<Timing> timing = new ArrayList<Timing>();
     private boolean active;
     protected double mUpdateRate = 1.0 / 50.0;
 
 
     public AutoBase(){
-        
     }
 
     /**
@@ -36,7 +35,7 @@ public class AutoBase extends CommandBase{
      */
     public void addAction(Action action, Timing time) {
         actions.add(action);
-        timing.add(timing);
+        timing.add(time);
     }
 
     /**
@@ -97,6 +96,6 @@ public class AutoBase extends CommandBase{
          * enum for whether to run actions sequentially or in parralel/
          */
         SEQUENTIAL,
-        PARRALEL;
+        PARALLEL;
     }
 }
