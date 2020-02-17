@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.DriveTrain.Gear;
 
 public class ArcadeDrive extends CommandBase {
   /**
