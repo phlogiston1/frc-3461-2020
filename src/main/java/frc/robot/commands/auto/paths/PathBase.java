@@ -50,7 +50,7 @@ public class PathBase extends CommandBase implements Action{
      * get the PathBase from a path.
      * @return PathBase
      */
-    public Command getPathbaseCommand(){ 
+    public Command getPathbaseCommand(){
         return this;
     }
 
@@ -58,7 +58,7 @@ public class PathBase extends CommandBase implements Action{
      * reset the voltage constraint.
      * @param voltage the voltage to limit to.
      */
-    public void setVoltageConstraint(double voltage) { 
+    public void setVoltageConstraint(double voltage) {
         autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(Constants.odo_kS, Constants.odo_kV, Constants.odo_kA), RobotContainer.robotState.kinematics,
                 Constants.auto_maxvoltage);
@@ -117,22 +117,22 @@ public class PathBase extends CommandBase implements Action{
     public void start() {
         System.out.println("starting path");
         ramsete = new RamseteCommand(
-        trajectory_,
-        RobotContainer.robotState::getCurrentPose,
-        new RamseteController(0, 0),
-        new SimpleMotorFeedforward(
-            Constants.odo_kS,
-            Constants.odo_kV,
-            Constants.odo_kA
-        ),
-        RobotContainer.robotState.kinematics,
-        driveTrain::getWheelSpeeds,
-        new PIDController(Constants.odo_kP, 0, 0),
-        new PIDController(Constants.odo_kP, 0, 0),
-        driveTrain::voltageDrive, driveTrain
-    );
-    CommandScheduler.getInstance().schedule(ramsete.andThen(() -> driveTrain.voltageDrive(0,0)));
-    System.out.println("path finished");
-    finished = true;
+            trajectory_,
+            RobotContainer.robotState::getCurrentPose,
+            new RamseteController(0, 0),
+            new SimpleMotorFeedforward(
+                Constants.odo_kS,
+                Constants.odo_kV,
+                Constants.odo_kA
+            ),
+            RobotContainer.robotState.kinematics,
+            driveTrain::getWheelSpeeds,
+            new PIDController(Constants.odo_kP, 0, 0),
+            new PIDController(Constants.odo_kP, 0, 0),
+            driveTrain::voltageDrive, driveTrain
+        );
+        CommandScheduler.getInstance().schedule(ramsete.andThen(() -> driveTrain.voltageDrive(0,0)));
+        System.out.println("path finished");
+        finished = true;
     }
 }
