@@ -23,11 +23,8 @@ public class AutoBase extends CommandBase{
     private List<Timing> timing = new ArrayList<Timing>();
     private boolean active;
     protected double mUpdateRate = 1.0 / 50.0;
-
-
     public AutoBase(){
     }
-
     /**
      * add an action to the stack
      * @param action The action to add
@@ -37,7 +34,6 @@ public class AutoBase extends CommandBase{
         actions.add(action);
         timing.add(time);
     }
-
     /**
      * run the stack.
      */
@@ -52,14 +48,12 @@ public class AutoBase extends CommandBase{
         }
         active = false;
     }
-
     /**
      * stop running
      */
     public void stop(){
         active = false;
     }
-
     /**
      * is auto running
      * @return boolean;
@@ -67,14 +61,12 @@ public class AutoBase extends CommandBase{
     public boolean isActive(){
         return active;
     }
-
     /**
      * print "Auto done"
      */
     public void done(){
         System.out.println("Auto done");
     }
-
     /**
      * team 254's runAction. starts and updates an action until it is finished or stopped.
      * @param action the action to run
@@ -93,9 +85,10 @@ public class AutoBase extends CommandBase{
     }
     public enum Timing{
         /**
-         * enum for whether to run actions sequentially or in parralel/
+         * enum for whether to run actions sequentially or in parallel/
          */
         SEQUENTIAL,
         PARALLEL;
     }
 }
+/hehehe
