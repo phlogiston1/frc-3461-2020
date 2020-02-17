@@ -8,7 +8,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.DriveTrain.Gear;
 
@@ -41,9 +44,12 @@ public class ArcadeDrive extends CommandBase {
     }
     _drive.percentageDrive(y - x, y + x);
     if(drvJoy.getRawButton(1)){
-      _drive.shift(Gear.HIGH_GEAR);
+    //  _drive.shift(Gear.HIGH_GEAR);
     }else{
-      _drive.shift(Gear.LOW_GEAR);
+    //  _drive.shift(Gear.LOW_GEAR);
+    }
+    if(drvJoy.getRawButton(5)){
+      RobotContainer.robotState.resetOdometry(new Pose2d(0,0,Rotation2d.fromDegrees(RobotContainer.robotState.getHeading())));
     }
   }
 

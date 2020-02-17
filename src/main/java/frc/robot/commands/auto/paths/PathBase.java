@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -114,23 +115,24 @@ public class PathBase extends CommandBase implements Action{
      */
     @Override
     public void start() {
+        System.out.println("starting path");
         ramsete = new RamseteCommand(
-        trajectory_, 
+        trajectory_,
         RobotContainer.robotState::getCurrentPose,
         new RamseteController(0, 0),
         new SimpleMotorFeedforward(
-            Constants.odo_kS, 
-            Constants.odo_kV, 
+            Constants.odo_kS,
+            Constants.odo_kV,
             Constants.odo_kA
-        ), 
+        ),
         RobotContainer.robotState.kinematics,
-        driveTrain::getWheelSpeeds, 
-        new PIDController(Constants.odo_kP, 0, 0), 
+        driveTrain::getWheelSpeeds,
+        new PIDController(Constants.odo_kP, 0, 0),
         new PIDController(Constants.odo_kP, 0, 0),
         driveTrain::voltageDrive, driveTrain
     );
-
-ramsete.andThen(() -> driveTrain.voltageDrive(0,0));
-finished = true;
+    CommandScheduler.getInstance().schedule(ramsete.andThen(() -> driveTrain.voltageDrive(0,0)));
+    System.out.println("path finished");
+    finished = true;
     }
 }

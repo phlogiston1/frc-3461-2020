@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -18,7 +19,7 @@ public class DriveTrain extends SubsystemBase {
     public WPI_TalonFX lFalcon2 = new WPI_TalonFX(Constants.DRIVE_LEFT_2);
     public WPI_TalonFX rFalcon1 = new WPI_TalonFX(Constants.DRIVE_RIGHT_1);
     public WPI_TalonFX rFalcon2 = new WPI_TalonFX(Constants.DRIVE_RIGHT_2);
-    public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
+    //public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
     private Gear _gear = Gear.LOW_GEAR;
     double[] ypr = new double[3];
     public DriveTrain() {
@@ -26,15 +27,18 @@ public class DriveTrain extends SubsystemBase {
         lFalcon2.follow(lFalcon1);
         rFalcon2.follow(rFalcon1);
         //set inverted motors
-        //TODO: make sure motors arent fighting
         lFalcon1.setInverted(false);
         lFalcon2.setInverted(InvertType.FollowMaster);
         rFalcon1.setInverted(true);
         rFalcon2.setInverted(InvertType.FollowMaster);
         //set neutral modes:
         setNeutralModes(NeutralMode.Brake);
+        lFalcon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35, 40, 5));
+        rFalcon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35, 40, 5));
+        //rFalcon1.setSensorPhase(false);
 
     }
+    /*
     public void shift(Gear gear){
         if(gear == Gear.HIGH_GEAR){
             shiftSolenoid.set(Value.kForward);
@@ -46,7 +50,7 @@ public class DriveTrain extends SubsystemBase {
             shiftSolenoid.set(Value.kOff);
         }
         _gear = gear;
-    }
+    }*/
     public Gear getGear(){
         return  _gear;
     }
@@ -86,10 +90,10 @@ public class DriveTrain extends SubsystemBase {
         rFalcon1.enableVoltageCompensation(isEnabled);
     }
     public double lEncoderPosition(){
-        return lFalcon1.getSelectedSensorPosition();
+        return lFalcon1.getSelectedSensorPosition()/2048 / 9.1 * 0.1524;
     }
     public double rEncoderPosition(){
-        return rFalcon1.getSelectedSensorPosition();
+        return rFalcon1.getSelectedSensorPosition()/2048 / 9.1 * 0.1524;
     }
     public void setNeutralModes(NeutralMode mode){
         lFalcon1.setNeutralMode(mode);
