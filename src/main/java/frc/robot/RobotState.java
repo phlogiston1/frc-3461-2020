@@ -181,27 +181,54 @@ public class RobotState {
         return pigeon.getFusedHeading();
     }
     //vision state
+    /**
+     * get the angle of the target from the camera
+     */
     public double targetAngleFromCamera(){
         return camera.getTargetOffsetX();
     }
+    /**
+     * get the target location from camera as a polar point
+     * @return
+     */
     public PolarPoint2d visionTargetFromCamera(){
         return new PolarPoint2d(targetDistanceFromCamera(), Rotation2d.fromDegrees(targetAngleFromCamera()));
     }
+    /**
+     * get the targets distance from the camera. calculated using the height of the camera
+     * and goal and the angle of the camera, in the units that the above are specified.
+     * @return the target distance
+     */
     public double targetDistanceFromCamera(){
         return camera.getTargetDistance();
     }
+    /**
+     * does the math to get the angle and distance to the inner goal.
+     * @return the PolarPoint2d of the inner goal
+     */
     public PolarPoint2d innerTargetFromCamera(){
         PolarPoint2d initialPoint = visionTargetFromCamera();
         initialPoint.cartesianTransform(0, Constants.INNER_GOAL_SPACING);
         return initialPoint;
     }
+    /**
+     * gets the angle to the inner target
+     * @return the angle to the inner target as a double
+     */
     public double innerTargetAngleFromCamera(){
         return innerTargetFromCamera().getR();
     }
     //vision + cartesian
+    /**
+     * get the cartesian location of the target
+     * @return the Point2d to the outer goal
+     */
     public Point2d cartesianTargetCoordinates(){
         return PolarPoint2d.getCartesianPoint(visionTargetFromCamera());
     }
+    /**
+     * updates odometry using the cartesian target coordinates.
+     */
     public void updateOdometryFromVision(){
         resetOdometry(fromPoint2d(cartesianTargetCoordinates(), Rotation2d.fromDegrees(getHeading()))); //actually, this might not be right so TODO
     }
@@ -211,26 +238,44 @@ public class RobotState {
         return new Pose2d(x,y,rotation);
     }
     //color sensor
+    /**
+     * get the name of the color sensor detected color
+     * @return The name of a color as a string
+     */
     public String getCurrentColorString(){
         return colorString;
     }
+    /**
+     * get the name of the target color
+     * @return The name of a color as a string
+     */
     public String getGoalColorString(){
         return goalColorString;
     }
+    /**
+     * get an integer corresponding to the color sensor detected color
+     * @return an int from 1 - 4
+     */
     public int getCurrentColorInt(){
         return currentColor;
     }
+    /**
+     * get an integer corresponding to the goal color
+     * @return an int from 0 - 4 (0 = corrupt data)
+     */
     public int getGoalColorInt(){
         return goalColor;
     }
-
+    /**
+     * update the values of the shuffleboard/smart dashboard
+     */
     public void putShuffleboard(){
         SmartDashboard.putNumber("Robot X", getCurrentPose().getTranslation().getX());
         SmartDashboard.putNumber("Robot Y", getCurrentPose().getTranslation().getY());
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putNumber("Robot Heading", getHeading());
-        SmartDashboard.putNumber("R encoder dist", driveTrain.rEncoderPosition());        
-        SmartDashboard.putNumber("L encoder dist", driveTrain.lEncoderPosition());        
+        SmartDashboard.putNumber("R encoder dist", driveTrain.rEncoderPosition());
+        SmartDashboard.putNumber("L encoder dist", driveTrain.lEncoderPosition());
 
         //SmartDashboard.putString("Current color", getCurrentColorString());
         //SmartDashboard.putString("Goal color", getGoalColorString());
