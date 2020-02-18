@@ -28,7 +28,10 @@ public final class Constants {
                                 CAMERA_ANGLE = 0,
                                 CAMERA_HEIGHT = 0.5,
                                 TARGET_HEIGHT = 3,
-                                INNER_GOAL_SPACING = 1;
+                                INNER_GOAL_SPACING = 1,
+                                DRIVE_ENCODER_CPR = 2048,
+                                DRIVE_GEAR_RATIO = 9.1,
+                                WHEEL_DIAMETER_METERS = 0.1524;
     public static final double AUTOAIM_kP = 0.015,
                                AUTOAIM_kI = 0.001,
                                AUTOAIM_kD = 0.0006,

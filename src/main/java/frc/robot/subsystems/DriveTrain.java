@@ -19,6 +19,7 @@ public class DriveTrain extends SubsystemBase {
     public WPI_TalonFX lFalcon2 = new WPI_TalonFX(Constants.DRIVE_LEFT_2);
     public WPI_TalonFX rFalcon1 = new WPI_TalonFX(Constants.DRIVE_RIGHT_1);
     public WPI_TalonFX rFalcon2 = new WPI_TalonFX(Constants.DRIVE_RIGHT_2);
+    public static final double wheelDiameter = Math.PI * Constants.WHEEL_DIAMETER_METERS;
     public DifferentialDrive dDrive = new DifferentialDrive(lFalcon1, rFalcon1);
     //public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
     private Gear _gear = Gear.LOW_GEAR;
@@ -71,8 +72,8 @@ public class DriveTrain extends SubsystemBase {
     }
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-          lFalcon1.getSelectedSensorVelocity(0)  /2048 / 9.1 * 0.1524
-        , rFalcon1.getSelectedSensorVelocity(0)  /2048 / 9.1 * 0.1524
+          lFalcon1.getSelectedSensorVelocity(0)/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter
+        , rFalcon1.getSelectedSensorVelocity(0)/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter
         );
       }
     public void resetEncoders(){
@@ -80,7 +81,7 @@ public class DriveTrain extends SubsystemBase {
         rFalcon1.setSelectedSensorPosition(0);
     }
     public double getAverageEncoderDistance(){
-        return (lFalcon1.getSelectedSensorPosition() + rFalcon1.getSelectedSensorPosition()) / 2.0;
+        return (lEncoderPosition() + rEncoderPosition()) / 2.0;
     }
     public double getYaw(){
         return ypr[0];
@@ -100,10 +101,10 @@ public class DriveTrain extends SubsystemBase {
         rFalcon1.enableVoltageCompensation(isEnabled);
     }
     public double lEncoderPosition(){
-        return lFalcon1.getSelectedSensorPosition()/2048 / 9.1 * 0.1524;
+        return lFalcon1.getSelectedSensorPosition()/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter;
     }
     public double rEncoderPosition(){
-        return rFalcon1.getSelectedSensorPosition()/2048 / 9.1 * 0.1524;
+        return rFalcon1.getSelectedSensorPosition()/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter;
     }
     public void setNeutralModes(NeutralMode mode){
         lFalcon1.setNeutralMode(mode);
