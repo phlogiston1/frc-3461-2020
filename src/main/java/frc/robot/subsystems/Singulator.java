@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Singulator extends SubsystemBase {
+public class Singulator extends SubsystemBase { //TODO ball handling
   /**
    * Creates a new ExampleSubsystem.
    */

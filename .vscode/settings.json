@@ -14,6 +14,16 @@
     "**/*~": true
   },
   "cSpell.words": [
-    "Feedforward"
+    "AUTOAIM",
+    "Feedforward",
+    "Pathbase",
+    "TRACKWIDTH",
+    "maxacceleration",
+    "maxspeed",
+    "maxvoltage",
+    "tinterp",
+    "tlong",
+    "tshort",
+    "tvert"
   ]
 }

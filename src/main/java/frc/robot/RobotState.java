@@ -48,9 +48,9 @@ public class RobotState {
     public static double IR;
     public static ColorMatchResult match;
     public static String colorString;
-    String goalColorString = "Not Recieved";
+    String goalColorString = "Not Received";
     /**
-     * initialize robotstate
+     * initialize RobotState
      * @param dt the drive train for odometry
      * @param l the limelight for vision
      */
@@ -66,7 +66,7 @@ public class RobotState {
     }
     //odometry state
     /**
-     * update odometry and color sensor, and check the gamespecificmessage to see if the color to spin to has been sent yet.
+     * update odometry and color sensor, and check the game specific message to see if the color to spin to has been sent yet.
      */
     public void update(){
         pigeon.getYawPitchRoll(ypr); //update the ypr
@@ -174,7 +174,7 @@ public class RobotState {
         return ypr[2];
     }
     /**
-     * get the fused accelerometer and magnometer heading from the pigeon
+     * get the fused accelerometer and magnetometer heading from the pigeon
      * @return the heading in degrees
      */
     public double getHeading(){

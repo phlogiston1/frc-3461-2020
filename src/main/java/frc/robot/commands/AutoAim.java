@@ -28,7 +28,7 @@ public class AutoAim extends CommandBase {
   boolean driveBaseAim = false;
   boolean resetTimer = true;
   Limelight camera_;
-  double timeSinceAquiredTarget;
+  double timeSinceAcquiredTarget;
   DriveTrain driveTrain;
   Timer timer = new Timer();
   CubicSplineInterpolate hoodSpline = new CubicSplineInterpolate();
