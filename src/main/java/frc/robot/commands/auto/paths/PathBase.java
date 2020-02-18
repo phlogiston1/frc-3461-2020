@@ -108,7 +108,6 @@ public class PathBase extends CommandBase implements Action{
 
     @Override
     public void done() {
-
     }
 
     /**

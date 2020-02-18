@@ -35,6 +35,7 @@ public final class Constants {
                                DRIVEBASE_AUTOAIM_kP = 0.0,
                                DRIVEBASE_AUTOAIM_kI = 0.0,
                                DRIVEBASE_AUTOAIM_kD = 0.0;
+	public static final double ENCODER_CPR = 0;
     public static double auto_maxspeed       = 1,
                          auto_maxacceleration = 0.2,
                          auto_maxvoltage      = 10,
@@ -43,11 +44,12 @@ public final class Constants {
                          odo_kS               = 0.205,
                          odo_kV               = 2.08,
                          odo_kA               = 0.208,
-                         odo_kP               = 0.00622,
+                         odo_kP               = 0.00322,
                          shooter_kP           = 0,
                          shooter_kI           = 0,
                          shooter_kD           = 0,
                          shooter_kF           = 0;
     public static double[] limelightSamples = {0,2,5,7,30,45}; //some data in degrees
     public static double[] limelightSampleDistances = {0,1,2,3,4,5}; //some data in meters
+	public static double kWheelDiameterMeters;
 }

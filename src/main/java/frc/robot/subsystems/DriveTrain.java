@@ -19,6 +19,7 @@ public class DriveTrain extends SubsystemBase {
     public WPI_TalonFX lFalcon2 = new WPI_TalonFX(Constants.DRIVE_LEFT_2);
     public WPI_TalonFX rFalcon1 = new WPI_TalonFX(Constants.DRIVE_RIGHT_1);
     public WPI_TalonFX rFalcon2 = new WPI_TalonFX(Constants.DRIVE_RIGHT_2);
+    public DifferentialDrive dDrive = new DifferentialDrive(lFalcon1, rFalcon1);
     //public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
     private Gear _gear = Gear.LOW_GEAR;
     double[] ypr = new double[3];
@@ -58,14 +59,22 @@ public class DriveTrain extends SubsystemBase {
     public void percentageDrive(double rSpeed, double lSpeed){
         lFalcon1.set(ControlMode.PercentOutput, lSpeed);
         rFalcon1.set(ControlMode.PercentOutput, rSpeed);
+        dDrive.feed();
+    }
+    public void arcadeDrive(double spd, double rot){
+        dDrive.arcadeDrive(spd, rot);
     }
     public void voltageDrive(double lVolts, double rVolts){
         lFalcon1.setVoltage(lVolts);
         rFalcon1.setVoltage(rVolts);
+        dDrive.feed();
     }
-    public DifferentialDriveWheelSpeeds getWheelSpeeds(){
-        return new DifferentialDriveWheelSpeeds(lFalcon1.getSelectedSensorVelocity(), rFalcon1.getSelectedSensorVelocity());
-    }
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(
+          lFalcon1.getSelectedSensorVelocity(0)  /2048 / 9.1 * 0.1524
+        , rFalcon1.getSelectedSensorVelocity(0)  /2048 / 9.1 * 0.1524
+        );
+      }
     public void resetEncoders(){
         lFalcon1.setSelectedSensorPosition(0);
         rFalcon1.setSelectedSensorPosition(0);
