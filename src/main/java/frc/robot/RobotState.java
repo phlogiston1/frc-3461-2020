@@ -293,6 +293,11 @@ public class RobotState {
         double x = xyz[0] / 16384 * 9.80665;
         double y = xyz[1] / 16384 * 9.80665;
         double z = xyz[2] / 16384 * 9.80665;
+        if(Math.abs(x) > Constants.bump_acceleration_thresh){
+            bumped = true;
+        }else{
+            bumped = false;
+        }
         //get velocity from acceleration
         accelerometerVelocityX += x*dTime;
         accelerometerVelocityY += y*dTime;
