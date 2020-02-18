@@ -14,6 +14,7 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
@@ -71,6 +72,7 @@ public class RobotState {
     public void update(){
         pigeon.getYawPitchRoll(ypr); //update the ypr
         odometry.update(Rotation2d.fromDegrees(getHeading()), driveTrain.lEncoderPosition(), driveTrain.rEncoderPosition());
+        wtfIdkWhatImDoing(pigeonAcceleration());
         Color detectedColor = colorSensor.getColor();
         match = colorMatcher.matchClosestColor(detectedColor);
         IR = colorSensor.getIR();
@@ -260,6 +262,57 @@ public class RobotState {
         return currentColor;
     }
     /**
+     * get the acceleration value from the pigeon
+     * @return xyz acceleration in a short
+     */
+    public short[] pigeonAcceleration(){
+        short[] xyz = new short[3];
+        pigeon.getBiasedAccelerometer(xyz);
+        return xyz;
+    }
+    public static double accelerometerVelocityX = 0;
+    public static double accelerometerVelocityY = 0;
+    public static double accelerometerVelocityZ = 0;
+    public static double accelerometerSuperRoughX = 0;
+    public static double accelerometerSuperRoughY = 0;
+    public static double accelerometerSuperRoughZ = 0;
+    public static Point2d superRoughPoint;
+    public static double prevTimestamp = 0;
+    public static boolean bumped = false;
+    /**
+     * acceleration "double integration" (not that I know what that means) to get
+     * xy location of robot independent of wheel rotation. maybe use to detect bumps.
+     * @param xyz the xyz acceleration from the pigeon
+     */
+    //super rough approximation...I hope
+    public void wtfIdkWhatImDoing(short[] xyz){
+        double currentTime = Timer.getFPGATimestamp();
+        double dTime = currentTime - prevTimestamp;
+        // pigeon acceleration is scaled to 16384 = 1G
+        // / 16384 * 9.80665 converts to m/s^2
+        double x = xyz[0] / 16384 * 9.80665;
+        double y = xyz[1] / 16384 * 9.80665;
+        double z = xyz[2] / 16384 * 9.80665;
+        //get velocity from acceleration
+        accelerometerVelocityX += x*dTime;
+        accelerometerVelocityY += y*dTime;
+        accelerometerVelocityZ += z*dTime;
+        //reuse the old variables to temporarily store the change
+        //x/y from velocity
+        x = accelerometerVelocityX*(currentTime - prevTimestamp);
+        y = accelerometerVelocityY*(currentTime - prevTimestamp);
+        z = accelerometerVelocityZ*(currentTime - prevTimestamp);
+        //rotates the change so that x isn't always ahead of the robot.
+        Point2d transformPoint = new Point2d(x,y);
+        transformPoint.rotateBy(Rotation2d.fromDegrees(getHeading()));
+        //add the change
+        accelerometerSuperRoughX += transformPoint.getX();
+        accelerometerSuperRoughY += transformPoint.getY();
+        accelerometerSuperRoughZ += accelerometerVelocityZ*(currentTime - prevTimestamp);
+        superRoughPoint = new Point2d(accelerometerSuperRoughX, accelerometerSuperRoughY);
+        prevTimestamp = currentTime;
+    }
+    /**
      * get an integer corresponding to the goal color
      * @return an int from 0 - 4 (0 = corrupt data)
      */
@@ -276,6 +329,8 @@ public class RobotState {
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putNumber("R encoder dist", driveTrain.rEncoderPosition());
         SmartDashboard.putNumber("L encoder dist", driveTrain.lEncoderPosition());
+        SmartDashboard.putNumber("pigeon rough x", accelerometerSuperRoughX);
+        SmartDashboard.putNumber("pigeon rough y", accelerometerSuperRoughY);
         //SmartDashboard.putString("Current color", getCurrentColorString());
         //SmartDashboard.putString("Goal color", getGoalColorString());
     }
