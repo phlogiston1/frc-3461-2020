@@ -72,8 +72,8 @@ public class DriveTrain extends SubsystemBase {
     }
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-          lFalcon1.getSelectedSensorVelocity(0)/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter
-        , rFalcon1.getSelectedSensorVelocity(0)/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter
+          lFalcon1.getSelectedSensorVelocity(0)/Constants.ENCODER_CPR / Constants.DRIVE_HIGH_GEAR_RATIO * wheelDiameter
+        , rFalcon1.getSelectedSensorVelocity(0)/Constants.ENCODER_CPR / Constants.DRIVE_HIGH_GEAR_RATIO * wheelDiameter
         );
       }
     public void resetEncoders(){
@@ -101,10 +101,10 @@ public class DriveTrain extends SubsystemBase {
         rFalcon1.enableVoltageCompensation(isEnabled);
     }
     public double lEncoderPosition(){
-        return lFalcon1.getSelectedSensorPosition()/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter;
+        return lFalcon1.getSelectedSensorPosition()/Constants.ENCODER_CPR / Constants.DRIVE_HIGH_GEAR_RATIO * wheelDiameter;
     }
     public double rEncoderPosition(){
-        return rFalcon1.getSelectedSensorPosition()/Constants.ENCODER_CPR / Constants.DRIVE_GEAR_RATIO * wheelDiameter;
+        return rFalcon1.getSelectedSensorPosition()/Constants.ENCODER_CPR / Constants.DRIVE_HIGH_GEAR_RATIO * wheelDiameter;
     }
     public void setNeutralModes(NeutralMode mode){
         lFalcon1.setNeutralMode(mode);
