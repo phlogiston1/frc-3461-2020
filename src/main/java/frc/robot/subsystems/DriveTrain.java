@@ -7,9 +7,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.ArcadeDrive;
 
 public class DriveTrain extends SubsystemBase {
@@ -25,15 +27,16 @@ public class DriveTrain extends SubsystemBase {
         lFalcon2.follow(lFalcon1);
         rFalcon2.follow(rFalcon1);
         //set inverted motors
-        lFalcon1.setInverted(false);
+        lFalcon1.setInverted(true);
         lFalcon2.setInverted(InvertType.FollowMaster);
-        rFalcon1.setInverted(true);
+        rFalcon1.setInverted(false);
         rFalcon2.setInverted(InvertType.FollowMaster);
         //set neutral modes:
         setNeutralModes(NeutralMode.Brake);
         lFalcon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35, 40, 5));
         rFalcon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35, 40, 5));
-        //rFalcon1.setSensorPhase(false);
+        rFalcon1.setSensorPhase(false);
+        lFalcon1.setSensorPhase(false);
 
     }
     /*
@@ -52,7 +55,7 @@ public class DriveTrain extends SubsystemBase {
     public Gear getGear(){
         return  _gear;
     }
-    public void percentageDrive(double lSpeed, double rSpeed){
+    public void percentageDrive(double rSpeed, double lSpeed){
         lFalcon1.set(ControlMode.PercentOutput, lSpeed);
         rFalcon1.set(ControlMode.PercentOutput, rSpeed);
     }
@@ -99,6 +102,11 @@ public class DriveTrain extends SubsystemBase {
     }
     @Override
     public void periodic() {
+    }
+    public double getTurnRate(){
+        double[] xyz = new double[3];
+        RobotContainer.robotState.pigeon.getRawGyro(xyz);
+        return xyz[2];
     }
     public enum Gear{
         HIGH_GEAR,

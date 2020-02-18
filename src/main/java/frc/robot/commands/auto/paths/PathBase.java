@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
@@ -132,7 +133,6 @@ public class PathBase extends CommandBase implements Action{
             driveTrain::voltageDrive, driveTrain
         );
         CommandScheduler.getInstance().schedule(ramsete.andThen(() -> driveTrain.voltageDrive(0,0)));
-        System.out.println("path finished");
         finished = true;
     }
 }

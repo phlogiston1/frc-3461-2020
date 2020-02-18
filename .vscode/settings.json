@@ -12,5 +12,8 @@
     "**/.settings": true,
     "**/.factorypath": true,
     "**/*~": true
-  }
+  },
+  "cSpell.words": [
+    "Feedforward"
+  ]
 }

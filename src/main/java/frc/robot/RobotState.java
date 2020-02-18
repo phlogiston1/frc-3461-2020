@@ -70,7 +70,7 @@ public class RobotState {
      */
     public void update(){
         pigeon.getYawPitchRoll(ypr); //update the ypr
-        odometry.update(Rotation2d.fromDegrees(getHeading()), driveTrain.lEncoderPosition(), -driveTrain.rEncoderPosition());
+        odometry.update(Rotation2d.fromDegrees(getHeading()), driveTrain.lEncoderPosition(), driveTrain.rEncoderPosition());
         Color detectedColor = colorSensor.getColor();
         match = colorMatcher.matchClosestColor(detectedColor);
         IR = colorSensor.getIR();
@@ -178,7 +178,7 @@ public class RobotState {
      * @return the heading in degrees
      */
     public double getHeading(){
-        return pigeon.getFusedHeading();
+        return Math.IEEEremainder(pigeon.getFusedHeading(), 360.0d) * -1.0d;
     }
     //vision state
     /**
@@ -276,7 +276,6 @@ public class RobotState {
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putNumber("R encoder dist", driveTrain.rEncoderPosition());
         SmartDashboard.putNumber("L encoder dist", driveTrain.lEncoderPosition());
-
         //SmartDashboard.putString("Current color", getCurrentColorString());
         //SmartDashboard.putString("Goal color", getGoalColorString());
     }

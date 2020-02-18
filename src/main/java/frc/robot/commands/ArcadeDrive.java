@@ -36,7 +36,7 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     double x = drvJoy.getX();
-    double y = drvJoy.getY();
+    double y = -drvJoy.getY();
     if(drvJoy.getRawButton(2)){
       y /= 2;
       x /= 2;
@@ -48,6 +48,7 @@ public class ArcadeDrive extends CommandBase {
     //  _drive.shift(Gear.LOW_GEAR);
     }
     if(drvJoy.getRawButton(5)){
+      RobotContainer.robotState.zeroHeading();
       RobotContainer.robotState.resetOdometry(new Pose2d(0,0,Rotation2d.fromDegrees(RobotContainer.robotState.getHeading())));
     }
   }
