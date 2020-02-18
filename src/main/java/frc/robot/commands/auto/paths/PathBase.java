@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
@@ -28,7 +27,7 @@ import frc.robot.commands.auto.actions.Action;
 import frc.robot.subsystems.DriveTrain;
 
 /**
- * Code to drive a path. simplifies writing new paths. Just use setTrajectory(trajectory) and then 
+ * Code to drive a path. simplifies writing new paths. Just use setTrajectory(trajectory) and then
  * call start() when you want to drive the path.
  */
 public class PathBase extends CommandBase implements Action{
