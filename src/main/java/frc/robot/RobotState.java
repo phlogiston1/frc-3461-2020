@@ -72,7 +72,7 @@ public class RobotState {
     public void update(){
         pigeon.getYawPitchRoll(ypr); //update the ypr
         odometry.update(Rotation2d.fromDegrees(getHeading()), driveTrain.lEncoderPosition(), driveTrain.rEncoderPosition());
-        wtfIdkWhatImDoing(pigeonAcceleration());
+        //wtfIdkWhatImDoing(pigeonAcceleration());
         Color detectedColor = colorSensor.getColor();
         match = colorMatcher.matchClosestColor(detectedColor);
         IR = colorSensor.getIR();

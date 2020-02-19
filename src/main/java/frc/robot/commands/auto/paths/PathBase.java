@@ -13,6 +13,9 @@ import java.nio.file.Paths;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
@@ -52,6 +55,10 @@ public class PathBase extends CommandBase implements Action{
      */
     public Command getPathbaseCommand(){
         return this;
+    }
+    public void init(){
+        RobotContainer.robotState.zeroHeading();
+        RobotContainer.robotState.resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
     }
 
     /**
