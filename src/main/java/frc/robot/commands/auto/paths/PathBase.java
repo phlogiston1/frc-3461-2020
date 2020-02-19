@@ -8,8 +8,9 @@
 package frc.robot.commands.auto.paths;
 
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -77,8 +78,9 @@ public class PathBase extends CommandBase implements Action{
      * @return a trajectory
      * @throws IOException
      */
-    public Trajectory getPathweaverTrajectory(String uri) throws IOException {
-        return TrajectoryUtil.fromPathweaverJson(Paths.get(uri));
+    public Trajectory getPathweaverTrajectory(String trajectoryJSON) throws IOException {
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+        return TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     }
 
     /**

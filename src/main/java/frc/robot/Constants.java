@@ -42,7 +42,10 @@ public final class Constants {
                                AUTOAIM_kD = 0.0006,
                                DRIVEBASE_AUTOAIM_kP = 0.0,
                                DRIVEBASE_AUTOAIM_kI = 0.0,
-                               DRIVEBASE_AUTOAIM_kD = 0.0;
+                               DRIVEBASE_AUTOAIM_kD = 0.0,
+                               TURRET_POSITION_kP = 0.0,
+                               TURRET_POSITION_kI = 0.0,
+                               TURRET_POSITION_kD = 0.0;
     public static double auto_maxspeed       = 2,
                          auto_maxacceleration = 2,
                          auto_maxvoltage      = 10,

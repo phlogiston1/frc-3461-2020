@@ -7,10 +7,11 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,10 +22,14 @@ public class Turret extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
   CANSparkMax turretMotor = new CANSparkMax(Constants.TURRET_PORT, MotorType.kBrushless);
-  Encoder encoder = new Encoder(0,1,false,Encoder.EncodingType.k2X); //TODO
   public boolean autoAiming = true;
+  public CANEncoder turretEnc = turretMotor.getEncoder();
+  public CANPIDController pid = turretMotor.getPIDController();
   public Turret() {
-    encoder.setDistancePerPulse(4./256.); //TODO
+    pid.setP(Constants.TURRET_POSITION_kP);
+    pid.setI(Constants.TURRET_POSITION_kI);
+    pid.setD(Constants.TURRET_POSITION_kD);
+    pid.setFeedbackDevice(turretEnc);
   }
   public void setSpeed(double speed){
     turretMotor.set(speed);
@@ -33,10 +38,13 @@ public class Turret extends SubsystemBase {
 
   }
   public double getPosition(){
-    return encoder.getDistance();
+    return turretEnc.getPosition();
   }
   public Rotation2d getRotation(){
-    return Rotation2d.fromDegrees(encoder.getDistance());
+    return Rotation2d.fromDegrees(turretEnc.getPosition() * 360);
+  }
+  public void gotoRotation(Rotation2d rotation){
+    pid.setReference(rotation.getDegrees()/360, ControlType.kPosition); //FIXME conversions for turret
   }
   @Override
   public void periodic() {
