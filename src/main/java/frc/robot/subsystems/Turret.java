@@ -29,6 +29,9 @@ public class Turret extends SubsystemBase {
   public void setSpeed(double speed){
     turretMotor.set(speed);
   }
+  public void setHoodPosition(double position){
+
+  }
   public double getPosition(){
     return encoder.getDistance();
   }
