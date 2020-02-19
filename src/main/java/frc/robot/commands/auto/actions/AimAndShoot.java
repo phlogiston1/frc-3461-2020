@@ -10,7 +10,7 @@ package frc.robot.commands.auto.actions;
 /**
  * Nothing at all... yet
  */
-public class AimAndShoot implements Action{
+public class AimAndShoot implements Action{ //TODO when we have ball handling
 
     @Override
     public boolean isFinished() {

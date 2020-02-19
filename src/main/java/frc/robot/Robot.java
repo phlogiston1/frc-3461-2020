@@ -19,7 +19,6 @@ import frc.robot.commands.auto.paths.PathBase;
  */
 public class Robot extends TimedRobot {
   private PathBase m_autonomousCommand;
-  
   private RobotContainer m_robotContainer = new RobotContainer();
 
   /**
@@ -66,7 +65,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    System.out.println("autonomus init");
+    System.out.println("autonomous init");
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     //schedule the autonomous command (example)
@@ -86,13 +85,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     //m_robotContainer.getDriveTrain().end();
-  
-    
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    //if (m_autonomousCommand != null) { FIXME
+    //if (m_autonomousCommand != null) {
     //  m_autonomousCommand.cancel();
     //}
     System.out.println("teleop init");

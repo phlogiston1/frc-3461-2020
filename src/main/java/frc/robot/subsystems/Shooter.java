@@ -25,8 +25,8 @@ public class Shooter extends SubsystemBase {
     private TalonFX slaveTalon = new TalonFX(Constants.SHOOTER_MOTOR_2);
     public Shooter() {
       slaveTalon.follow(masterTalon);
-      masterTalon.setInverted(false); //TODO
-      slaveTalon.setInverted(InvertType.FollowMaster); //TODO
+      masterTalon.setInverted(false); //TODO make sure motor is spinning forwards
+      slaveTalon.setInverted(InvertType.FollowMaster); //TODO make sure motors aren't fighting
       masterTalon.config_kP(0, Constants.shooter_kP);
       masterTalon.config_kI(0, Constants.shooter_kI);
       masterTalon.config_kD(0, Constants.shooter_kD);

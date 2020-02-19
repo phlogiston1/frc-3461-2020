@@ -23,12 +23,18 @@ public final class Constants {
                             PIGEON_IMU = 4,
                             TURRET_PORT = 5,
                             SHOOTER_MOTOR_1 = 6,
-                            SHOOTER_MOTOR_2 = 7;
+                            SHOOTER_MOTOR_2 = 7,
+                            SINGULATOR_MOTOR_L = 8,
+                            SINGULATOR_MOTOR_R = 9;
     public static final double DRIVETRAIN_TRACKWIDTH = 0.6, // all these need to be updated + idk what units yet. all will prob be meters.
                                 CAMERA_ANGLE = 0,
                                 CAMERA_HEIGHT = 0.5,
                                 TARGET_HEIGHT = 3,
-                                INNER_GOAL_SPACING = 1;
+                                INNER_GOAL_SPACING = 1,
+                                DRIVE_ENCODER_CPR = 2048,
+                                DRIVE_HIGH_GEAR_RATIO = 9.1,
+                                DRIVE_LOW_GEAR_RATIO = 24,
+                                WHEEL_DIAMETER_METERS = 0.1524;
     public static final double AUTOAIM_kP = 0.015,
                                AUTOAIM_kI = 0.001,
                                AUTOAIM_kD = 0.0006,
@@ -48,8 +54,16 @@ public final class Constants {
                          shooter_kP           = 0,
                          shooter_kI           = 0,
                          shooter_kD           = 0,
-                         shooter_kF           = 0;
-    public static double[] limelightSamples = {0,2,5,7,30,45}; //some data in degrees
-    public static double[] limelightSampleDistances = {0,1,2,3,4,5}; //some data in meters
-	public static double kWheelDiameterMeters;
+                         shooter_kF           = 0,
+                         bump_acceleration_thresh = 0;
+    //limelight
+    public static double[] limelightSamples =           {0,2,5,7,30,45}; //some data in degrees
+    public static double[] limelightSampleDistances =   {0,1,2,3,4,5}; //some data in meters
+    //shifting
+    public static double[] shiftPoint = {0,0,0,0,0,0};
+    public static double[] percentOutputSamples =       {0,0,0,0,0,0,0};
+    //public static double[] outputVelocitySamples =      {0,0,0,0,0,0,0};
+    public static double kWheelDiameterMeters;
+    public static double lowGearAutoShiftMultiplier = 0;
+    public static double shiftThreshold = 0.2;
 }

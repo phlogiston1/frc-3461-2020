@@ -11,7 +11,6 @@ public class Limelight {
   private final double cHeight;
 
   /**
-   * 
    * @param targetHeight the height of the target for calculating distance
    * @param cameraHeight the height of the camera for calculating distance
    */
@@ -21,7 +20,7 @@ public class Limelight {
   }
 
   /**
-   * get a raw table entry from the limelight networktables.
+   * get a raw table entry from the limelight NetworkTables.
    * @param entry the name of the entry to get
    * @return a double with the value of the entry.
    */
@@ -29,7 +28,7 @@ public class Limelight {
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry(entry).getDouble(0.0);
   }
   /**
-   * set a raw limetlight networktables value.
+   * set a raw limelight NetworkTables value.
    * @param entry the name of the entry
    * @param value the value to set it to.
    */
@@ -97,33 +96,33 @@ public class Limelight {
   }
   /**
    * whether the limelight is tracking the target
-   * @return boolea. true if the limelight has target.
+   * @return boolean. true if the limelight has target.
    */
   public double hasTarget() {
     double value = limelightTableValue("tv"); //0 or 1
     return value;
   }
   /**
-   * turn the leds on.
+   * turn the led's on.
    */
   public void setLedOn(){
     writeTableValue("ledMode", 3);
   }
   /**
-   * turn leds off.
+   * turn led's off.
    */
   public void setLedOff(){
     writeTableValue("ledMode", 1);
   }
   /**
-   * set the leds to blink mode
+   * set the led's to blink mode
    * (seizure mode)
    */
   public void setLedBlink(){
     writeTableValue("ledMode", 2);
   }
   /**
-   * set the leds to the default value
+   * set the led's to the default value
    */
   public void setLedDefault(){
     writeTableValue("ledMode", 0);

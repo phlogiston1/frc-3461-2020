@@ -90,4 +90,4 @@ public class AutoBase extends CommandBase{
         SEQUENTIAL,
         PARALLEL;
     }
-}//hi
+}
