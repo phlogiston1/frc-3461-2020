@@ -55,13 +55,13 @@ public class AutoAim extends CommandBase {
            kI = Constants.AUTOAIM_kI,
            kD = Constants.AUTOAIM_kD;
     //get the vision error
-    double errorFromVision = RobotContainer.robotState.innerTargetAngleFromCamera();
+    double errorFromVision = RobotContainer.getRobotState().innerTargetAngleFromCamera();
     //get the odometry error
-    Rotation2d errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.robotState.getCurrentPose()).getRotation2dP();
+    Rotation2d errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.getRobotState().getCurrentPose()).getRotation2dP();
     //switch between vision and odometry error
     double error = (cameraAim ? errorFromVision : errorFromOdometry.getDegrees() - turret.getPosition());
     //get the hood angle by interpolating distance with empirical data
-    double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.robotState.targetDistanceFromCamera());
+    double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.getRobotState().targetDistanceFromCamera());
     //set the hood position to the correct angle or 0 if we aren't aiming
     turret.setHoodPosition(cameraAim ? hoodAngle : 0);
     //adjust the constants if the drivebase turret backup is on

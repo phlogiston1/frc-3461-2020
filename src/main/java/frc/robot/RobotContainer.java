@@ -26,7 +26,7 @@ public class RobotContainer {
   private static final DriveTrain driveTrain = new DriveTrain();
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
 
-  public static RobotState robotState = new RobotState(driveTrain, camera);
+  private static final RobotState robotState = new RobotState(driveTrain, camera);
 
   private final TestPath testAuto = new TestPath(driveTrain);
   /**
@@ -42,6 +42,12 @@ public class RobotContainer {
     return new RobotContainer();
   }
 
+  public Limelight getLimelight(){
+    return camera;
+  }
+  public static RobotState getRobotState(){
+    return robotState;
+  }
   public DriveTrain getDriveTrain(){
     return driveTrain;
   }

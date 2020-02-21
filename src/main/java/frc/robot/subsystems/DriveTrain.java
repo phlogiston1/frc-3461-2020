@@ -115,7 +115,7 @@ public class DriveTrain extends SubsystemBase {
     }
     public double getTurnRate(){
         double[] xyz = new double[3];
-        RobotContainer.robotState.pigeon.getRawGyro(xyz);
+        RobotContainer.getRobotState().pigeon.getRawGyro(xyz);
         return xyz[2];
     }
     public enum Gear{
