@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CodeLens (Launch) - raycasting",
+      "request": "launch",
+      "mainClass": "frc.lib.math.path_finding.raycasting",
+      "projectName": "PEACCE2020.1"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - RayCasting",
+      "request": "launch",
+      "mainClass": "frc.lib.math.path_finding.RayCasting",
+      "projectName": "PEACCE2020.1"
+    },
+    {
+      "type": "java",
       "name": "CodeLens (Launch) - CubicSplineInterpolate",
       "request": "launch",
       "mainClass": "frc.lib.math.CubicSplineInterpolate",

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoAim;
 import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.commands.auto.paths.TestPath;
+import frc.lib.Limelight;
 import frc.robot.subsystems.*;
 
 /**
@@ -26,8 +27,13 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private static final DriveTrain driveTrain = new DriveTrain();
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
+<<<<<<< HEAD
   private static final Turret turret = new Turret();
   public static RobotState robotState = new RobotState(driveTrain, camera);
+=======
+
+  private static final RobotState robotState = new RobotState(driveTrain, camera);
+>>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
 
   private final TestPath testAuto = new TestPath(driveTrain);
   /**
@@ -43,6 +49,12 @@ public class RobotContainer {
     return new RobotContainer();
   }
 
+  public Limelight getLimelight(){
+    return camera;
+  }
+  public static RobotState getRobotState(){
+    return robotState;
+  }
   public DriveTrain getDriveTrain(){
     return driveTrain;
   }

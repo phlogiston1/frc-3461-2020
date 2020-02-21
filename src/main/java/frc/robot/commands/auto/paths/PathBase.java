@@ -8,8 +8,9 @@
 package frc.robot.commands.auto.paths;
 
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -57,8 +58,8 @@ public class PathBase extends CommandBase implements Action{
         return this;
     }
     public void init(){
-        RobotContainer.robotState.zeroHeading();
-        RobotContainer.robotState.resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
+        RobotContainer.getRobotState().zeroHeading();
+        RobotContainer.getRobotState().resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
     }
 
     /**
@@ -67,7 +68,7 @@ public class PathBase extends CommandBase implements Action{
      */
     public void setVoltageConstraint(double voltage) {
         autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(Constants.odo_kS, Constants.odo_kV, Constants.odo_kA), RobotContainer.robotState.kinematics,
+                new SimpleMotorFeedforward(Constants.odo_kS, Constants.odo_kV, Constants.odo_kA), RobotContainer.getRobotState().kinematics,
                 Constants.auto_maxvoltage);
     }
 
@@ -77,8 +78,9 @@ public class PathBase extends CommandBase implements Action{
      * @return a trajectory
      * @throws IOException
      */
-    public Trajectory getPathweaverTrajectory(String uri) throws IOException {
-        return TrajectoryUtil.fromPathweaverJson(Paths.get(uri));
+    public Trajectory getPathweaverTrajectory(String trajectoryJSON) throws IOException {
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+        return TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     }
 
     /**
@@ -94,7 +96,7 @@ public class PathBase extends CommandBase implements Action{
      */
     public TrajectoryConfig getTrajectoryConfig(){
         return new TrajectoryConfig(Constants.auto_maxspeed, Constants.auto_maxacceleration)
-        .setKinematics(RobotContainer.robotState.kinematics).addConstraint(autoVoltageConstraint);
+        .setKinematics(RobotContainer.getRobotState().kinematics).addConstraint(autoVoltageConstraint);
     }
 
     //get the ramsete command for the path
@@ -124,14 +126,14 @@ public class PathBase extends CommandBase implements Action{
         System.out.println("starting path");
         ramsete = new RamseteCommand(
             trajectory_,
-            RobotContainer.robotState::getCurrentPose,
+            RobotContainer.getRobotState()::getCurrentPose,
             new RamseteController(0, 0),
             new SimpleMotorFeedforward(
                 Constants.odo_kS,
                 Constants.odo_kV,
                 Constants.odo_kA
             ),
-            RobotContainer.robotState.kinematics,
+            RobotContainer.getRobotState().kinematics,
             driveTrain::getWheelSpeeds,
             new PIDController(Constants.odo_kP, 0, 0),
             new PIDController(Constants.odo_kP, 0, 0),

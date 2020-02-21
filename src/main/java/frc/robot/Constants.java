@@ -24,8 +24,10 @@ public final class Constants {
                             TURRET_PORT = 3,
                             SHOOTER_MOTOR_1 = 6,
                             SHOOTER_MOTOR_2 = 7,
-                            SINGULATOR_MOTOR_L = 8,
-                            SINGULATOR_MOTOR_R = 9;
+                            HOPPER_MOTOR_L = 8,
+                            HOPPER_MOTOR_R = 9,
+                            CHIMNEY_MOTOR_L = 10,
+                            CHIMNEY_MOTOR_R = 11;
     public static final double DRIVETRAIN_TRACKWIDTH = 0.6, // all these need to be updated + idk what units yet. all will prob be meters.
                                 CAMERA_ANGLE = 0,
                                 CAMERA_HEIGHT = 0.5,
@@ -40,7 +42,10 @@ public final class Constants {
                                AUTOAIM_kD = 0.0006,
                                DRIVEBASE_AUTOAIM_kP = 0.0,
                                DRIVEBASE_AUTOAIM_kI = 0.0,
-                               DRIVEBASE_AUTOAIM_kD = 0.0;
+                               DRIVEBASE_AUTOAIM_kD = 0.0,
+                               TURRET_POSITION_kP = 0.0,
+                               TURRET_POSITION_kI = 0.0,
+                               TURRET_POSITION_kD = 0.0;
     public static double auto_maxspeed       = 2,
                          auto_maxacceleration = 2,
                          auto_maxvoltage      = 10,
@@ -56,7 +61,7 @@ public final class Constants {
                          shooter_kF           = 0,
                          bump_acceleration_thresh = 0;
     //limelight
-    public static double[] limelightSamples =           {0,2,5,7,30,45}; //some data in degrees
+    public static double[] hoodAngles =           {0,2,5,7,30,45}; //some data in degrees
     public static double[] limelightSampleDistances =   {0,1,2,3,4,5}; //some data in meters
     //shifting
     public static double[] shiftPoint = {0,0,0,0,0,0};

@@ -1,6 +1,7 @@
-package frc.robot;
+package frc.lib;
 
 import edu.wpi.first.networktables.*;
+import frc.robot.Constants;
 
 /*
  *Simple class for interfacing with the limelight camera.

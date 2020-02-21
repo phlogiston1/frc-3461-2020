@@ -11,24 +11,29 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Singulator extends SubsystemBase { //TODO add beam-break sensors
+public class BallHandling extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  Spark lMotor = new Spark(Constants.SINGULATOR_MOTOR_L);
-  Spark rMotor = new Spark(Constants.SINGULATOR_MOTOR_R);
-  public Singulator() {
-
+  public Spark hopper_l = new Spark(Constants.HOPPER_MOTOR_L);
+  public Spark hopper_r = new Spark(Constants.HOPPER_MOTOR_R);
+  public Spark chimney_l = new Spark(Constants.CHIMNEY_MOTOR_L);
+  public Spark chimney_r = new Spark(Constants.CHIMNEY_MOTOR_R);
+  //public DigitalInput beamBreak = new DigitalInput(); TODO beam break
+  public BallHandling() {
   }
-  public void runSingulator(double speed){
-    lMotor.set(speed);
-    rMotor.set(speed);
+  public void setHopperSpeed(double speed){
+    hopper_l.set(speed); //todo check directions
+    hopper_r.set(-speed);
   }
-  public void runSingulator(double lSpeed, double rSpeed){
-    lMotor.set(lSpeed);
-    rMotor.set(rSpeed);
+  public void setHopperSpeed(double rSpeed, double lSpeed){
+    hopper_r.set(rSpeed);
+    hopper_l.set(lSpeed);
   }
-
+  public void setChimneySpeed(double speed){
+    chimney_l.set(speed); //todo check directions
+    chimney_r.set(-speed);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

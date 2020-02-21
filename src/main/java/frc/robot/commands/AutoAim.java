@@ -8,12 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+=======
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+>>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.math.CubicSplineInterpolate;
 import frc.lib.math.PolarPoint2d;
 import frc.robot.Constants;
-import frc.robot.Limelight;
+import frc.lib.Limelight;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turret;
@@ -39,7 +43,7 @@ public class AutoAim extends CommandBase {
     turret = subsystem;
     camera_ = camera;
     driveTrain = dt;
-    hoodSpline.setSamples(Constants.limelightSampleDistances, Constants.limelightSamples);
+    hoodSpline.setSamples(Constants.limelightSampleDistances, Constants.hoodAngles);
   }
 
   // Called when the command is initially scheduled.
@@ -50,19 +54,35 @@ public class AutoAim extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //initialize gains
     double kP = Constants.AUTOAIM_kP,
            kI = Constants.AUTOAIM_kI,
            kD = Constants.AUTOAIM_kD;
+<<<<<<< HEAD
     double errorFromVision = RobotContainer.robotState.innerTargetAngleFromCamera();
     //double errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.robotState.getCurrentPose()).getP();
     double error = errorFromVision;//(cameraAim ? errorFromVision : errorFromOdometry) - turret.getPosition(); FIXME for pid loop testing
     //double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.robotState.targetDistanceFromCamera());
     SmartDashboard.putNumber("vision error", errorFromVision);
+=======
+    //get the vision error
+    double errorFromVision = RobotContainer.getRobotState().innerTargetAngleFromCamera();
+    //get the odometry error
+    Rotation2d errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.getRobotState().getCurrentPose()).getRotation2dP();
+    //switch between vision and odometry error
+    double error = (cameraAim ? errorFromVision : errorFromOdometry.getDegrees() - turret.getPosition());
+    //get the hood angle by interpolating distance with empirical data
+    double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.getRobotState().targetDistanceFromCamera());
+    //set the hood position to the correct angle or 0 if we aren't aiming
+    turret.setHoodPosition(cameraAim ? hoodAngle : 0);
+    //adjust the constants if the drivebase turret backup is on
+>>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
     if(driveBaseAim){
       kP = Constants.DRIVEBASE_AUTOAIM_kP;
       kI = Constants.DRIVEBASE_AUTOAIM_kI;
       kD = Constants.DRIVEBASE_AUTOAIM_kD;
     }
+    //turn on the led's if we're trying to aim
     if(cameraAim){
       camera_.setLedOn();
       camera_.setModeVision();
@@ -71,21 +91,34 @@ public class AutoAim extends CommandBase {
       camera_.setLedOff();
       camera_.setModeDrive();
     }
+    //run the pid loop
     prevError = error;
     if(integral > .25 || error == 0) integral = 0;
     integral += error * kI;
     double PIDOut = kP * error + kD * (error - prevError) + integral;
+<<<<<<< HEAD
     if(true){//turret.autoAiming){
       System.out.println("updating autoAim with value: " + PIDOut);
+=======
+    //set the speed of the turret
+    if(turret.autoAiming){
+>>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
       if(driveBaseAim){
         driveTrain.percentageDrive(-PIDOut, PIDOut);
       }
       turret.setSpeed(-PIDOut);
     }
+<<<<<<< HEAD
     if(timer.hasPeriodPassed(0.2) && error > 0.02){
       //driveBaseAim = true; FIXME disabled for pidloop tuning
+=======
+    //make sure the turret is functional. If it isn't enable the drivebase backup
+    if(timer.hasPeriodPassed(0.2) && error > 0.02){ //TODO update to accurate values
+      driveBaseAim = true;
+>>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
     }
-    if(error < 0.02){
+    //reset the drivebase backup once the aim is complete
+    if(error < 0.02){ //TODO update to accurate values
       driveBaseAim = false;
       timer.stop();
       timer.reset();
