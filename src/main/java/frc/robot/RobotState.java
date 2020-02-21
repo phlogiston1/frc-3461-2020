@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.lib.math.Point2d;
 import frc.lib.math.PolarPoint2d;
 import frc.robot.subsystems.DriveTrain;
+import frc.lib.Limelight;
 
 /**
  * RobotState calculates positions of the robot and target.
@@ -72,7 +73,7 @@ public class RobotState {
     public void update(){
         pigeon.getYawPitchRoll(ypr); //update the ypr
         odometry.update(Rotation2d.fromDegrees(getHeading()), driveTrain.lEncoderPosition(), driveTrain.rEncoderPosition());
-        //wtfIdkWhatImDoing(pigeonAcceleration());
+        wtfIdkWhatImDoing(pigeonAcceleration()); //todo testme
         Color detectedColor = colorSensor.getColor();
         match = colorMatcher.matchClosestColor(detectedColor);
         IR = colorSensor.getIR();
