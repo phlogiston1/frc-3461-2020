@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.math.CubicSplineInterpolate;
 import frc.lib.math.PolarPoint2d;
@@ -53,9 +54,10 @@ public class AutoAim extends CommandBase {
            kI = Constants.AUTOAIM_kI,
            kD = Constants.AUTOAIM_kD;
     double errorFromVision = RobotContainer.robotState.innerTargetAngleFromCamera();
-    double errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.robotState.getCurrentPose()).getP();
-    double error = (cameraAim ? errorFromVision : errorFromOdometry) - turret.getPosition();
+    //double errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.robotState.getCurrentPose()).getP();
+    double error = errorFromVision;//(cameraAim ? errorFromVision : errorFromOdometry) - turret.getPosition(); FIXME for pid loop testing
     //double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.robotState.targetDistanceFromCamera());
+    SmartDashboard.putNumber("vision error", errorFromVision);
     if(driveBaseAim){
       kP = Constants.DRIVEBASE_AUTOAIM_kP;
       kI = Constants.DRIVEBASE_AUTOAIM_kI;
@@ -73,14 +75,15 @@ public class AutoAim extends CommandBase {
     if(integral > .25 || error == 0) integral = 0;
     integral += error * kI;
     double PIDOut = kP * error + kD * (error - prevError) + integral;
-    if(turret.autoAiming){
+    if(true){//turret.autoAiming){
+      System.out.println("updating autoAim with value: " + PIDOut);
       if(driveBaseAim){
         driveTrain.percentageDrive(-PIDOut, PIDOut);
       }
-      turret.setSpeed(PIDOut);
+      turret.setSpeed(-PIDOut);
     }
     if(timer.hasPeriodPassed(0.2) && error > 0.02){
-      driveBaseAim = true;
+      //driveBaseAim = true; FIXME disabled for pidloop tuning
     }
     if(error < 0.02){
       driveBaseAim = false;

@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoAim;
 import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.commands.auto.paths.TestPath;
 import frc.robot.subsystems.*;
@@ -24,7 +26,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private static final DriveTrain driveTrain = new DriveTrain();
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
-
+  private static final Turret turret = new Turret();
   public static RobotState robotState = new RobotState(driveTrain, camera);
 
   private final TestPath testAuto = new TestPath(driveTrain);
@@ -51,7 +53,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+  JoystickButton autoAimBtn = new JoystickButton(oprJoy, 1);
   private void configureButtonBindings() {
+    autoAimBtn.whileHeld(new AutoAim(turret, driveTrain, camera));
   }
   public Joystick getOperatorJoystick(){
     return oprJoy;

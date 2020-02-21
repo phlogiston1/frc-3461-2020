@@ -21,7 +21,7 @@ public final class Constants {
                             DRIVE_RIGHT_1 = 2,
                             DRIVE_RIGHT_2 = 3,
                             PIGEON_IMU = 4,
-                            TURRET_PORT = 5,
+                            TURRET_PORT = 3,
                             SHOOTER_MOTOR_1 = 6,
                             SHOOTER_MOTOR_2 = 7,
                             SINGULATOR_MOTOR_L = 8,

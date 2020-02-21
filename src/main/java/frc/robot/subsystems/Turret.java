@@ -7,11 +7,13 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -21,19 +23,23 @@ public class Turret extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
   CANSparkMax turretMotor = new CANSparkMax(Constants.TURRET_PORT, MotorType.kBrushless);
-  Encoder encoder = new Encoder(0,1,false,Encoder.EncodingType.k2X); //TODO
-  public boolean autoAiming = true;
+  CANEncoder encoder = turretMotor.getEncoder();
+  public boolean autoAiming = false;
   public Turret() {
-    encoder.setDistancePerPulse(4./256.); //TODO
   }
   public void setSpeed(double speed){
-    turretMotor.set(speed);
+    speed *=  0.2;
+    if((getPosition() > 0 || speed > 0) && (getPosition() < 35 || speed < 0)){ //soft limit
+      turretMotor.set(speed);
+    }else{
+      turretMotor.set(0);
+    }
   }
   public double getPosition(){
-    return encoder.getDistance();
+    return encoder.getPosition();
   }
   public Rotation2d getRotation(){
-    return Rotation2d.fromDegrees(encoder.getDistance());
+    return Rotation2d.fromDegrees(encoder.getPosition());
   }
   @Override
   public void periodic() {
@@ -42,5 +48,9 @@ public class Turret extends SubsystemBase {
     if(!autoAiming){
       setSpeed(RobotContainer.getInstance().getOperatorJoystick().getX());
     }
+    if(RobotContainer.getInstance().getOperatorJoystick().getRawButton(5)){
+      encoder.setPosition(-10);
+    }
+    SmartDashboard.putNumber("turret position", encoder.getPosition());
   }
 }
