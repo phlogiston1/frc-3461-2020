@@ -8,11 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-=======
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
->>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.math.CubicSplineInterpolate;
 import frc.lib.math.PolarPoint2d;
@@ -58,25 +55,22 @@ public class AutoAim extends CommandBase {
     double kP = Constants.AUTOAIM_kP,
            kI = Constants.AUTOAIM_kI,
            kD = Constants.AUTOAIM_kD;
-<<<<<<< HEAD
-    double errorFromVision = RobotContainer.robotState.innerTargetAngleFromCamera();
     //double errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.robotState.getCurrentPose()).getP();
-    double error = errorFromVision;//(cameraAim ? errorFromVision : errorFromOdometry) - turret.getPosition(); FIXME for pid loop testing
+    //(cameraAim ? errorFromVision : errorFromOdometry) - turret.getPosition(); FIXME for pid loop testing
     //double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.robotState.targetDistanceFromCamera());
-    SmartDashboard.putNumber("vision error", errorFromVision);
-=======
     //get the vision error
     double errorFromVision = RobotContainer.getRobotState().innerTargetAngleFromCamera();
+    double error = errorFromVision;
     //get the odometry error
     Rotation2d errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.getRobotState().getCurrentPose()).getRotation2dP();
     //switch between vision and odometry error
-    double error = (cameraAim ? errorFromVision : errorFromOdometry.getDegrees() - turret.getPosition());
+    //double error = (cameraAim ? errorFromVision : errorFromOdometry.getDegrees() - turret.getPosition());
     //get the hood angle by interpolating distance with empirical data
     double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.getRobotState().targetDistanceFromCamera());
     //set the hood position to the correct angle or 0 if we aren't aiming
     turret.setHoodPosition(cameraAim ? hoodAngle : 0);
+    SmartDashboard.putNumber("vision error", errorFromVision);
     //adjust the constants if the drivebase turret backup is on
->>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
     if(driveBaseAim){
       kP = Constants.DRIVEBASE_AUTOAIM_kP;
       kI = Constants.DRIVEBASE_AUTOAIM_kI;
@@ -96,26 +90,19 @@ public class AutoAim extends CommandBase {
     if(integral > .25 || error == 0) integral = 0;
     integral += error * kI;
     double PIDOut = kP * error + kD * (error - prevError) + integral;
-<<<<<<< HEAD
     if(true){//turret.autoAiming){
       System.out.println("updating autoAim with value: " + PIDOut);
-=======
     //set the speed of the turret
     if(turret.autoAiming){
->>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
       if(driveBaseAim){
         driveTrain.percentageDrive(-PIDOut, PIDOut);
       }
       turret.setSpeed(-PIDOut);
     }
-<<<<<<< HEAD
-    if(timer.hasPeriodPassed(0.2) && error > 0.02){
       //driveBaseAim = true; FIXME disabled for pidloop tuning
-=======
     //make sure the turret is functional. If it isn't enable the drivebase backup
     if(timer.hasPeriodPassed(0.2) && error > 0.02){ //TODO update to accurate values
       driveBaseAim = true;
->>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
     }
     //reset the drivebase backup once the aim is complete
     if(error < 0.02){ //TODO update to accurate values
@@ -124,6 +111,7 @@ public class AutoAim extends CommandBase {
       timer.reset();
     }
   }
+}
 
   // Called once the command ends or is interrupted.
   @Override

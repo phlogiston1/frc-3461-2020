@@ -27,14 +27,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private static final DriveTrain driveTrain = new DriveTrain();
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
-<<<<<<< HEAD
   private static final Turret turret = new Turret();
-  public static RobotState robotState = new RobotState(driveTrain, camera);
-=======
 
   private static final RobotState robotState = new RobotState(driveTrain, camera);
->>>>>>> 6e095849d5ff53c8f9a6235bba6b917f2332bfbf
-
   private final TestPath testAuto = new TestPath(driveTrain);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.

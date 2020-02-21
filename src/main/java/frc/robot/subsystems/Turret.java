@@ -45,11 +45,11 @@ public class Turret extends SubsystemBase {
 
   }
   public double getPosition(){
-    return encoder.getPosition();
-  }
-  public Rotation2d getRotation(){
     return turretEnc.getPosition();
   }
+  //public Rotation2d getRotation(){
+    //return Roataion2d.fromDegreesturretEnc.getPosition();
+  //}
   public Rotation2d getRotation(){
     return Rotation2d.fromDegrees(turretEnc.getPosition() * 360);
   }
@@ -64,8 +64,8 @@ public class Turret extends SubsystemBase {
       setSpeed(RobotContainer.getInstance().getOperatorJoystick().getX());
     }
     if(RobotContainer.getInstance().getOperatorJoystick().getRawButton(5)){
-      encoder.setPosition(-10);
+      turretEnc.setPosition(-10);
     }
-    SmartDashboard.putNumber("turret position", encoder.getPosition());
+    SmartDashboard.putNumber("turret position", turretEnc.getPosition());
   }
 }
