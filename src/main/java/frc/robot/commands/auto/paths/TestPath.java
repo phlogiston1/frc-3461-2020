@@ -42,7 +42,7 @@ public class TestPath extends PathBase {
         getTrajectoryConfig()
         );
         //set the trajectory
-        setTrajectory(getPathweaverTrajectory("Unnamed.wpilib.json"));
+        setTrajectory(getPathweaverTrajectory("output/Unnamed_0.wpilib.json"));
         System.out.println("trajectory ready");
 	}
 }

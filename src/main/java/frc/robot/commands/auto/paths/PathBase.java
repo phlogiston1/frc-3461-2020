@@ -83,10 +83,11 @@ public class PathBase extends CommandBase implements Action{
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            return trajectory;
           } catch (IOException ex) {
             DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-          }
-          return trajectory_;
+            return null;
+        }
     }
 
     /**
