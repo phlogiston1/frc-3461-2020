@@ -28,6 +28,7 @@ public class RobotContainer {
   private static final DriveTrain driveTrain = new DriveTrain();
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
   private static final Turret turret = new Turret();
+  private static RobotContainer instance;
 
   private static final RobotState robotState = new RobotState(driveTrain, camera);
   private final TestPath testAuto = new TestPath(driveTrain);
@@ -41,7 +42,10 @@ public class RobotContainer {
     configureButtonBindings();
   }
   public static RobotContainer getInstance(){
-    return new RobotContainer();
+    if(instance == null){
+      instance = new RobotContainer();
+    }
+    return instance;
   }
 
   public Limelight getLimelight(){

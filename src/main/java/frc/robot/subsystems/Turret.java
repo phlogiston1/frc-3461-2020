@@ -37,6 +37,7 @@ public class Turret extends SubsystemBase {
     speed *=  0.2;
     if((getPosition() > 0 || speed > 0) && (getPosition() < 35 || speed < 0)){ //soft limit
       turretMotor.set(speed);
+      System.out.println("setting turret speed to " + speed);
     }else{
       turretMotor.set(0);
     }

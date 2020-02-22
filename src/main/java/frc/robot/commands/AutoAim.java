@@ -26,10 +26,12 @@ public class AutoAim extends CommandBase {
   Turret turret;
   double integral;
   double prevError = 0;
+  double kI, kP, kD;
   boolean cameraAim = true;
   boolean driveBaseAim = false;
   boolean resetTimer = true;
   Limelight camera_;
+  double loopTime = 20;
   double timeSinceAcquiredTarget;
   DriveTrain driveTrain;
   Timer timer = new Timer();
@@ -46,76 +48,32 @@ public class AutoAim extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println(">>>>>>>STARTED<<<<<<<<<<");
+    camera_.setLedOn();
+    camera_.setModeVision();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //initialize gains
-    double kP = Constants.AUTOAIM_kP,
-           kI = Constants.AUTOAIM_kI,
-           kD = Constants.AUTOAIM_kD;
-    //double errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.robotState.getCurrentPose()).getP();
-    //(cameraAim ? errorFromVision : errorFromOdometry) - turret.getPosition(); FIXME for pid loop testing
-    //double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.robotState.targetDistanceFromCamera());
-    //get the vision error
-    double errorFromVision = RobotContainer.getRobotState().innerTargetAngleFromCamera();
-    double error = errorFromVision;
-    //get the odometry error
-    Rotation2d errorFromOdometry = PolarPoint2d.fromPose(RobotContainer.getRobotState().getCurrentPose()).getRotation2dP();
-    //switch between vision and odometry error
-    //double error = (cameraAim ? errorFromVision : errorFromOdometry.getDegrees() - turret.getPosition());
-    //get the hood angle by interpolating distance with empirical data
-    double hoodAngle = hoodSpline.cubicSplineInterpolate(RobotContainer.getRobotState().targetDistanceFromCamera());
-    //set the hood position to the correct angle or 0 if we aren't aiming
-    turret.setHoodPosition(cameraAim ? hoodAngle : 0);
-    SmartDashboard.putNumber("vision error", errorFromVision);
-    //adjust the constants if the drivebase turret backup is on
-    if(driveBaseAim){
-      kP = Constants.DRIVEBASE_AUTOAIM_kP;
-      kI = Constants.DRIVEBASE_AUTOAIM_kI;
-      kD = Constants.DRIVEBASE_AUTOAIM_kD;
-    }
-    //turn on the led's if we're trying to aim
-    if(cameraAim){
-      camera_.setLedOn();
-      camera_.setModeVision();
-      timer.start();
-    }else{
-      camera_.setLedOff();
-      camera_.setModeDrive();
-    }
-    //run the pid loop
-    prevError = error;
-    if(integral > .25 || error == 0) integral = 0;
-    integral += error * kI;
-    double PIDOut = kP * error + kD * (error - prevError) + integral;
-    if(true){//turret.autoAiming){
-      System.out.println("updating autoAim with value: " + PIDOut);
-    //set the speed of the turret
-    if(turret.autoAiming){
-      if(driveBaseAim){
-        driveTrain.percentageDrive(-PIDOut, PIDOut);
-      }
-      turret.setSpeed(-PIDOut);
-    }
-      //driveBaseAim = true; FIXME disabled for pidloop tuning
-    //make sure the turret is functional. If it isn't enable the drivebase backup
-    if(timer.hasPeriodPassed(0.2) && error > 0.02){ //TODO update to accurate values
-      driveBaseAim = true;
-    }
-    //reset the drivebase backup once the aim is complete
-    if(error < 0.02){ //TODO update to accurate values
-      driveBaseAim = false;
-      timer.stop();
-      timer.reset();
-    }
+    System.out.println(">>>>>>>>EXIc<<<<<<<<<<");
+    kP = .15;
+    kI = 0.003;
+    kD = 0.02;
+    double error = camera_.getTargetOffsetX();
+    integral += kI * (error/loopTime);
+    if(integral > .25 || error < .01)
+      integral = 0;
+    double PID = kP * error + integral + kD * ((prevError - error)/loopTime);
+    System.out.println(PID);
+    turret.setSpeed(PID);
   }
-}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    camera_.setLedOff();
+    camera_.setModeDrive();
   }
 
   // Returns true when the command should end.

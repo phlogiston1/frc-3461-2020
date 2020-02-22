@@ -204,8 +204,8 @@ public class RobotState {
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putNumber("R encoder dist", driveTrain.rEncoderPosition());
         SmartDashboard.putNumber("L encoder dist", driveTrain.lEncoderPosition());
-        SmartDashboard.putNumber("pigeon rough x", pigeon.getRoughOdometry().getX());
-        SmartDashboard.putNumber("pigeon rough y", pigeon.getRoughOdometry().getY());
+        //SmartDashboard.putNumber("pigeon rough x", pigeon.getRoughOdometry().getX());
+        //SmartDashboard.putNumber("pigeon rough y", pigeon.getRoughOdometry().getY());
         //SmartDashboard.putString("Current color", getCurrentColorString());
         //SmartDashboard.putString("Goal color", getGoalColorString());
     }
