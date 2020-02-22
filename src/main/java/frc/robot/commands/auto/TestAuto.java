@@ -20,7 +20,7 @@ public class TestAuto extends AutoBase{
      * @param dt the drive train to run the ramsete command on.
      */
     public TestAuto(DriveTrain dt){
-        addAction(new TestPath(dt), Timing.SEQUENTIAL);
+        //addAction(new TestPath(dt), Timing.SEQUENTIAL);
         addAction(new AimAndShoot(), Timing.SEQUENTIAL);
     }
 }

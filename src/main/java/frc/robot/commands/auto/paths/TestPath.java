@@ -7,6 +7,7 @@
 
 package frc.robot.commands.auto.paths;
 
+import java.io.IOException;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.geometry.*;
@@ -18,14 +19,15 @@ import frc.robot.subsystems.DriveTrain;
 /**
  * Testing the PathBase framework. just call start on this to drive the path.
  */
-public class TestPath extends PathBase{
+public class TestPath extends PathBase {
     /**
-     * creates a new trajectory,
-     * and then sets it in the PathBase as the one to follow.
-     * Call start on this to drive the path.
+     * creates a new trajectory, and then sets it in the PathBase as the one to
+     * follow. Call start on this to drive the path.
+     * 
      * @param subsystem drive train to pass to PathBase
+     * @throws IOException
      */
-    public TestPath(DriveTrain subsystem) {
+    public TestPath(DriveTrain subsystem) throws IOException {
         super(subsystem);
         //create a new trajectory
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -40,7 +42,7 @@ public class TestPath extends PathBase{
         getTrajectoryConfig()
         );
         //set the trajectory
-        setTrajectory(trajectory);
+        setTrajectory(getPathweaverTrajectory("Unnamed.wpilib.json"));
         System.out.println("trajectory ready");
 	}
 }

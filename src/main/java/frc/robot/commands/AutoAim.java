@@ -45,6 +45,10 @@ public class AutoAim extends CommandBase {
     hoodSpline.setSamples(Constants.limelightSampleDistances, Constants.hoodAngles);
   }
 
+  public Limelight getCamera(){
+    return camera_;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -65,6 +69,7 @@ public class AutoAim extends CommandBase {
     if(integral > .25 || error < .01)
       integral = 0;
     double PID = kP * error + integral + kD * ((prevError - error)/loopTime);
+    prevError = error;
     System.out.println(PID);
     turret.setSpeed(PID);
   }

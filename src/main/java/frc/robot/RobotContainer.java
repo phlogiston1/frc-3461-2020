@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -18,10 +20,11 @@ import frc.lib.Limelight;
 import frc.robot.subsystems.*;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -31,55 +34,60 @@ public class RobotContainer {
   private static RobotContainer instance;
 
   private static final RobotState robotState = new RobotState(driveTrain, camera);
-  private final TestPath testAuto = new TestPath(driveTrain);
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   private final Joystick oprJoy = new Joystick(1);
+
   public RobotContainer() {
     // Configure the button bindings
     System.out.println("initializing robot container");
     configureButtonBindings();
   }
   public static RobotContainer getInstance(){
-    if(instance == null){
+    if (instance == null) {
       instance = new RobotContainer();
     }
     return instance;
   }
 
-  public Limelight getLimelight(){
+  public Limelight getLimelight() {
     return camera;
   }
-  public static RobotState getRobotState(){
+
+  public static RobotState getRobotState() {
     return robotState;
   }
-  public DriveTrain getDriveTrain(){
+
+  public DriveTrain getDriveTrain() {
     return driveTrain;
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   JoystickButton autoAimBtn = new JoystickButton(oprJoy, 1);
+
   private void configureButtonBindings() {
     autoAimBtn.whileHeld(new AutoAim(turret, driveTrain, camera));
   }
-  public Joystick getOperatorJoystick(){
+
+  public Joystick getOperatorJoystick() {
     return oprJoy;
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
+   * @throws IOException
    */
-  public PathBase getAutonomousCommand() {
+  public PathBase getAutonomousCommand() throws IOException {
     // An ExampleCommand will run in autonomous
+    TestPath testAuto = new TestPath(driveTrain);
     return testAuto;
   }
 }

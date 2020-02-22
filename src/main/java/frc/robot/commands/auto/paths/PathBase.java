@@ -10,6 +10,7 @@ package frc.robot.commands.auto.paths;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
@@ -79,8 +80,13 @@ public class PathBase extends CommandBase implements Action{
      * @throws IOException
      */
     public Trajectory getPathweaverTrajectory(String trajectoryJSON) throws IOException {
-        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-        return TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+            Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+          } catch (IOException ex) {
+            DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+          }
+          return trajectory_;
     }
 
     /**

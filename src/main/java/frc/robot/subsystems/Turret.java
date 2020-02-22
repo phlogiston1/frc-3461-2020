@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+
 import com.revrobotics.CANEncoder;
 
 import com.revrobotics.CANPIDController;
