@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -153,6 +154,13 @@ public class RobotState {
      */
     public Point2d cartesianTargetCoordinates(){
         return PolarPoint2d.getCartesianPoint(visionTargetFromCamera());
+    }
+    public PolarPoint2d getTargetFromOdometry(){
+        Translation2d robotTranslation = odometry.getPoseMeters().getTranslation();
+        PolarPoint2d error = Point2d.getPolarPoint(new Point2d(robotTranslation.getX(), robotTranslation.getY()));
+        error.transformBy(0, Rotation2d.fromDegrees(getHeading()));
+        SmartDashboard.putNumber("error from target odometry", error.getP());
+        return error;
     }
     /**
      * updates odometry using the cartesian target coordinates.

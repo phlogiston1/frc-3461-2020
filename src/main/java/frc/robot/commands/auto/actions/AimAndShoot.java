@@ -7,32 +7,37 @@
 
 package frc.robot.commands.auto.actions;
 
-/**
- * Nothing at all... yet
- */
-public class AimAndShoot implements Action{ //TODO when we have ball handling
+import frc.robot.RobotState;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.lib.Limelight;
+import frc.robot.commands.AutoAim;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Turret;
 
-    @Override
-    public boolean isFinished() {
-        // TODO Auto-generated method stub
+/**
+ * Add your docs here.
+ */
+public class AimAndShoot implements Action{ //todo
+    private Turret turret;
+    private DriveTrain driveTrain;
+    private Limelight camera;
+    private AutoAim aimer;
+    public AimAndShoot(Turret t, DriveTrain dt, Limelight cam, RobotState state){
+        turret = t;
+        driveTrain = dt;
+        camera = cam;
+        aimer = new AutoAim(turret, driveTrain, camera, state);
+    }
+    public boolean isFinished(){
         return false;
     }
-
-    @Override
-    public void update() {
-        // TODO Auto-generated method stub
+    public void update(){
 
     }
-
-    @Override
-    public void done() {
-        // TODO Auto-generated method stub
-
+    public void done(){
+        CommandScheduler.getInstance().cancel(aimer);
     }
-
-    @Override
-    public void start() {
-        // TODO Auto-generated method stub
-
+    public void start(){
+        CommandScheduler.getInstance().schedule(aimer);
     }
 }

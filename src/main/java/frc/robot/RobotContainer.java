@@ -69,10 +69,10 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  JoystickButton autoAimBtn = new JoystickButton(oprJoy, 1);
+  JoystickButton autoAimBtn = new JoystickButton(oprJoy, 6);
 
   private void configureButtonBindings() {
-    autoAimBtn.whileHeld(new AutoAim(turret, driveTrain, camera));
+    autoAimBtn.whileHeld(new AutoAim(turret, driveTrain, camera, robotState));
   }
 
   public Joystick getOperatorJoystick() {

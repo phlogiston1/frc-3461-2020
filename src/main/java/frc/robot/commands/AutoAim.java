@@ -7,15 +7,14 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+import frc.robot.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.math.CubicSplineInterpolate;
 import frc.lib.math.PolarPoint2d;
 import frc.robot.Constants;
-import frc.lib.Limelight;
 import frc.robot.RobotContainer;
+import frc.lib.Limelight;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turret;
 
@@ -27,25 +26,23 @@ public class AutoAim extends CommandBase {
   double integral;
   double prevError = 0;
   double kI, kP, kD;
-  boolean cameraAim = true;
-  boolean driveBaseAim = false;
-  boolean resetTimer = true;
   Limelight camera_;
   double loopTime = 20;
-  double timeSinceAcquiredTarget;
   DriveTrain driveTrain;
-  Timer timer = new Timer();
+  boolean odometryAim = false;
   CubicSplineInterpolate hoodSpline = new CubicSplineInterpolate();
-  public AutoAim(Turret subsystem, DriveTrain dt, Limelight camera) {
+  RobotState state;
+  public AutoAim(Turret subsystem, DriveTrain dt, Limelight camera, RobotState rs) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     turret = subsystem;
     camera_ = camera;
     driveTrain = dt;
+    state = rs;
     hoodSpline.setSamples(Constants.limelightSampleDistances, Constants.hoodAngles);
   }
 
-  public Limelight getCamera(){
+public Limelight getCamera(){
     return camera_;
   }
 
@@ -65,6 +62,10 @@ public class AutoAim extends CommandBase {
     kI = 0.003;
     kD = 0.02;
     double error = camera_.getTargetOffsetX();
+    double odometryError = state.getTargetFromOdometry().getRotation2dP().getDegrees();
+    odometryError -= turret.getPosition();
+    SmartDashboard.putNumber("odometry error",odometryError);
+    if(odometryAim) error = odometryError;
     integral += kI * (error/loopTime);
     if(integral > .25 || error < .01)
       integral = 0;

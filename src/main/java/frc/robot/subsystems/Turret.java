@@ -37,7 +37,7 @@ public class Turret extends SubsystemBase {
   }
   public void setSpeed(double speed){
     speed *=  0.2;
-    if((getPosition() > 0 || speed > 0) && (getPosition() < 35 || speed < 0)){ //soft limit
+    if((getPosition() > 0 || speed > 0) && (getPosition() < 170 || speed < 0)){ //soft limit
       turretMotor.set(speed);
       System.out.println("setting turret speed to " + speed);
     }else{
@@ -64,7 +64,7 @@ public class Turret extends SubsystemBase {
     // This method will be called once per scheduler run
     autoAiming = RobotContainer.getInstance().getOperatorJoystick().getRawButton(1);
     if(!autoAiming){
-      setSpeed(RobotContainer.getInstance().getOperatorJoystick().getX());
+      setSpeed(RobotContainer.getInstance().getOperatorJoystick().getZ());
     }
     if(RobotContainer.getInstance().getOperatorJoystick().getRawButton(5)){
       turretEnc.setPosition(-10);
