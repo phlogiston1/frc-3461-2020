@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,7 +20,8 @@ public class BallHandling extends SubsystemBase {
   public Spark hopper_r = new Spark(Constants.HOPPER_MOTOR_R);
   public Spark chimney_l = new Spark(Constants.CHIMNEY_MOTOR_L);
   public Spark chimney_r = new Spark(Constants.CHIMNEY_MOTOR_R);
-  //public DigitalInput beamBreak = new DigitalInput(); TODO beam break
+  public DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1); //TODO beam break
+  public DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_2);
   public BallHandling() {
   }
   public void setHopperSpeed(double speed){
@@ -33,6 +35,12 @@ public class BallHandling extends SubsystemBase {
   public void setChimneySpeed(double speed){
     chimney_l.set(speed); //todo check directions
     chimney_r.set(-speed);
+  }
+  public boolean lowerBeamBreakTripped(){
+    return beamBreak1.get();
+  }
+  public boolean upperBeamBreakTripped(){
+    return beamBreak2.get();
   }
   @Override
   public void periodic() {

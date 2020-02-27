@@ -16,6 +16,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //port numbers
     public static final int DRIVE_LEFT_1 = 0,
                             DRIVE_LEFT_2 = 1,
                             DRIVE_RIGHT_1 = 2,
@@ -27,16 +28,20 @@ public final class Constants {
                             HOPPER_MOTOR_L = 8,
                             HOPPER_MOTOR_R = 9,
                             CHIMNEY_MOTOR_L = 10,
-                            CHIMNEY_MOTOR_R = 11;
+                            CHIMNEY_MOTOR_R = 11,
+                            BEAM_BREAK_1 = 12,
+                            BEAM_BREAK_2 = 13;
+    //physical dimensions
     public static final double DRIVETRAIN_TRACKWIDTH = 0.6, // all these need to be updated + idk what units yet. all will prob be meters.
                                 CAMERA_ANGLE = 0,
-                                CAMERA_HEIGHT = 0.5,
-                                TARGET_HEIGHT = 3,
+                                CAMERA_HEIGHT = 0.467,
+                                TARGET_HEIGHT = 1,
                                 INNER_GOAL_SPACING = 1,
                                 DRIVE_ENCODER_CPR = 2048,
                                 DRIVE_HIGH_GEAR_RATIO = 9.1,
                                 DRIVE_LOW_GEAR_RATIO = 24,
                                 WHEEL_DIAMETER_METERS = 0.1524;
+    //gains
     public static final double AUTOAIM_kP = 0.015,
                                AUTOAIM_kI = 0.001,
                                AUTOAIM_kD = 0.0006,
@@ -46,6 +51,7 @@ public final class Constants {
                                TURRET_POSITION_kP = 0.0,
                                TURRET_POSITION_kI = 0.0,
                                TURRET_POSITION_kD = 0.0;
+    //gains that aren't capitalized
     public static double auto_maxspeed       = 2,
                          auto_maxacceleration = 2,
                          auto_maxvoltage      = 10,

@@ -158,7 +158,7 @@ public class RobotState {
     public PolarPoint2d getTargetFromOdometry(){
         Translation2d robotTranslation = odometry.getPoseMeters().getTranslation();
         PolarPoint2d error = Point2d.getPolarPoint(new Point2d(robotTranslation.getX(), robotTranslation.getY()));
-        error.transformBy(0, Rotation2d.fromDegrees(getHeading()));
+        error.transformBy(0, Rotation2d.fromDegrees(-pigeon.getHeading()));
         SmartDashboard.putNumber("error from target odometry", error.getP());
         return error;
     }
@@ -166,7 +166,8 @@ public class RobotState {
      * updates odometry using the cartesian target coordinates.
      */
     public void updateOdometryFromVision(){
-        resetOdometry(fromPoint2d(cartesianTargetCoordinates(), Rotation2d.fromDegrees(getHeading()))); //actually, this might not be right so TODO
+        //pigeon.update(RobotContainer.getInstance().getTurret().getPosition()); //FIXME
+        resetOdometry(fromPoint2d(cartesianTargetCoordinates(), Rotation2d.fromDegrees(-getHeading() + RobotContainer.getInstance().getTurret().getPosition()))); //actually, this might not be right so TODO
     }
     public Pose2d fromPoint2d(Point2d point, Rotation2d rotation){
         double x = point.getX();

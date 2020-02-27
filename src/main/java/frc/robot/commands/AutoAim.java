@@ -29,9 +29,11 @@ public class AutoAim extends CommandBase {
   Limelight camera_;
   double loopTime = 20;
   DriveTrain driveTrain;
-  boolean odometryAim = false;
+  boolean odometryAim = true;
   CubicSplineInterpolate hoodSpline = new CubicSplineInterpolate();
   RobotState state;
+  double targetOdometryErrorCorrector;
+
   public AutoAim(Turret subsystem, DriveTrain dt, Limelight camera, RobotState rs) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -64,7 +66,20 @@ public Limelight getCamera(){
     double error = camera_.getTargetOffsetX();
     double odometryError = state.getTargetFromOdometry().getRotation2dP().getDegrees();
     odometryError -= turret.getPosition();
+    if(odometryAim){
+      camera_.setLedOff();
+      camera_.setModeDrive();
+    }else{
+      targetOdometryErrorCorrector = 0;
+      camera_.setLedOn();
+      camera_.setModeVision();
+      state.updateOdometryFromVision();
+      //turret.turretEnc.setPosition(0);
+      targetOdometryErrorCorrector = odometryError - camera_.getTargetOffsetX();
+    }
+    //odometryError -= targetOdometryErrorCorrector;
     SmartDashboard.putNumber("odometry error",odometryError);
+    SmartDashboard.putNumber("odometry error error",targetOdometryErrorCorrector);
     if(odometryAim) error = odometryError;
     integral += kI * (error/loopTime);
     if(integral > .25 || error < .01)
@@ -73,6 +88,7 @@ public Limelight getCamera(){
     prevError = error;
     System.out.println(PID);
     turret.setSpeed(PID);
+    odometryAim = !RobotContainer.getInstance().getOperatorJoystick().getRawButton(8);
   }
 
   // Called once the command ends or is interrupted.

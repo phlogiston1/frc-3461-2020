@@ -78,6 +78,9 @@ public class RobotContainer {
   public Joystick getOperatorJoystick() {
     return oprJoy;
   }
+  public Turret getTurret(){
+    return turret;
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -22,7 +22,7 @@ import frc.robot.commands.auto.paths.PathBase;
  */
 public class Robot extends TimedRobot {
   private PathBase m_autonomousCommand;
-  private RobotContainer m_robotContainer;// = RobotContainer.getInstance();
+  public RobotContainer m_robotContainer;// = RobotContainer.getInstance();
 
   /**
    * This function is run when the robot is first started up and should be used

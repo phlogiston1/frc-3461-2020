@@ -70,8 +70,10 @@ public class ArcadeDrive extends CommandBase {
     }
     //button to reset odometry (for debugging)
     if(drvJoy.getRawButton(5)){
-      RobotContainer.getRobotState().zeroHeading();
       RobotContainer.getRobotState().resetOdometry(new Pose2d(0,0,Rotation2d.fromDegrees(RobotContainer.getRobotState().getHeading())));
+    }
+    if(drvJoy.getRawButton(3)){
+      RobotContainer.getRobotState().zeroHeading();
     }
     //auto shift
     if(autoShifting){
