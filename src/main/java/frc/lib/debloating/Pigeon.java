@@ -27,8 +27,8 @@ public class Pigeon {
     private double accelerometerSuperRoughX = 0;
     private double accelerometerSuperRoughY = 0;
     private double accelerometerSuperRoughZ = 0;
-    private double bump_acceleration_thresh;
-    private Point2d superRoughPoint;
+    private double bump_acceleration_thresh = 5000;
+    private Point2d superRoughPoint = new Point2d(0,0);
     private double prevTimestamp = 0;
     private boolean bumped = false;
 
@@ -97,13 +97,16 @@ public class Pigeon {
      */
     //super rough approximation...I hope
     public void updateRoughOdometry(short[] xyz, double heading){
+        System.out.println("Pigeon: updating odometry");
         double currentTime = Timer.getFPGATimestamp();
         double dTime = currentTime - prevTimestamp;
         // pigeon acceleration is scaled to 16384 = 1G
         // / 16384 * 9.80665 converts to m/s^2
-        double x = xyz[0] / 16384 * 9.80665;
-        double y = xyz[1] / 16384 * 9.80665;
-        double z = xyz[2] / 16384 * 9.80665;
+        double x = (xyz[0]);// / 16384) * 9.80665;
+        double y = (xyz[1]);// / 16384) * 9.80665;
+        double z = (xyz[2]) / 16384 * 9.80665;
+        System.out.println("Pigeon: x acceleration of " + x);
+        System.out.println("Pigeon: y acceleration of " + y);
         if(Math.abs(x) > bump_acceleration_thresh){
             bumped = true;
         }else{

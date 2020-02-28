@@ -10,9 +10,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.util.DriveSignal;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.commands.ArcadeDrive;
 
 public class DriveTrain extends SubsystemBase {
     public WPI_TalonFX lFalcon1 = new WPI_TalonFX(Constants.DRIVE_LEFT_1);
@@ -25,7 +25,7 @@ public class DriveTrain extends SubsystemBase {
     private Gear _gear = Gear.LOW_GEAR;
     double[] ypr = new double[3];
     public DriveTrain() {
-        setDefaultCommand(new ArcadeDrive(this));
+        setDefaultCommand(RobotContainer.getDriveCommand()); //TODO testme idk if this works
         lFalcon2.follow(lFalcon1);
         rFalcon2.follow(rFalcon1);
         //set inverted motors
@@ -64,6 +64,11 @@ public class DriveTrain extends SubsystemBase {
     }
     public void arcadeDrive(double spd, double rot){
         dDrive.arcadeDrive(spd, rot);
+    }
+    public void arcadeDrive(DriveSignal signal){
+        lFalcon1.set(signal.getLeft());
+        rFalcon1.set(signal.getRight());
+        dDrive.feed();
     }
     public void voltageDrive(double lVolts, double rVolts){
         lFalcon1.setVoltage(lVolts);

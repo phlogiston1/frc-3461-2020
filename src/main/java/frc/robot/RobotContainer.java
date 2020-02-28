@@ -12,8 +12,13 @@ import java.io.IOException;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoAim;
+import frc.robot.commands.CheesyDrive;
 import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.commands.auto.paths.TestPath;
 import frc.lib.Limelight;
@@ -32,6 +37,7 @@ public class RobotContainer {
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
   private static final Turret turret = new Turret();
   private static RobotContainer instance;
+  private static SendableChooser<Command> driveChooser = new SendableChooser<Command>();
 
   private static final RobotState robotState = new RobotState(driveTrain, camera);
   /**
@@ -40,9 +46,13 @@ public class RobotContainer {
   private final Joystick oprJoy = new Joystick(1);
 
   public RobotContainer() {
+    driveChooser.addOption("Arcade Drive", new ArcadeDrive(driveTrain));
+    driveChooser.addOption("Cheesy Drive", new CheesyDrive(driveTrain));
+    driveChooser.addOption("Tank Drive (not made yet)", new ArcadeDrive(driveTrain));
     // Configure the button bindings
     System.out.println("initializing robot container");
     configureButtonBindings();
+    SmartDashboard.putData(driveChooser);
   }
   public static RobotContainer getInstance(){
     if (instance == null) {
@@ -50,7 +60,9 @@ public class RobotContainer {
     }
     return instance;
   }
-
+  public static Command getDriveCommand(){
+    return driveChooser.getSelected();
+  }
   public Limelight getLimelight() {
     return camera;
   }

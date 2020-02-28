@@ -33,6 +33,7 @@ public class AutoAim extends CommandBase {
   CubicSplineInterpolate hoodSpline = new CubicSplineInterpolate();
   RobotState state;
   double targetOdometryErrorCorrector;
+  boolean scanDirection = false;
 
   public AutoAim(Turret subsystem, DriveTrain dt, Limelight camera, RobotState rs) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -87,7 +88,23 @@ public Limelight getCamera(){
     double PID = kP * error + integral + kD * ((prevError - error)/loopTime);
     prevError = error;
     System.out.println(PID);
-    turret.setSpeed(PID);
+    if(camera_.hasTarget() == 1){
+      turret.setSpeed(PID);
+    }else{
+      if(scanDirection){
+        if(turret.getPosition() < 180){
+          turret.setSpeed(0.4);
+        }else{
+          scanDirection = !scanDirection;
+        }
+      }else{
+        if(turret.getPosition() > -180){
+          turret.setSpeed(-0.4);
+        }else{
+          scanDirection = !scanDirection;
+        }
+      }
+    }
     odometryAim = !RobotContainer.getInstance().getOperatorJoystick().getRawButton(8);
   }
 

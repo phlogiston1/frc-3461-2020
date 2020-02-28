@@ -116,12 +116,15 @@ public class RobotState {
     public double targetAngleFromCamera(){
         return camera.getTargetOffsetX();
     }
+    public double targetAngleFromRobot(){
+        return camera.getTargetOffsetX() - RobotContainer.getInstance().getTurret().getPosition();
+    }
     /**
      * get the target location from camera as a polar point
      * @return
      */
     public PolarPoint2d visionTargetFromCamera(){
-        return new PolarPoint2d(targetDistanceFromCamera(), Rotation2d.fromDegrees(targetAngleFromCamera()));
+        return new PolarPoint2d(targetDistanceFromCamera(), Rotation2d.fromDegrees(targetAngleFromRobot()));
     }
     /**
      * get the targets distance from the camera. calculated using the height of the camera
@@ -167,7 +170,7 @@ public class RobotState {
      */
     public void updateOdometryFromVision(){
         //pigeon.update(RobotContainer.getInstance().getTurret().getPosition()); //FIXME
-        resetOdometry(fromPoint2d(cartesianTargetCoordinates(), Rotation2d.fromDegrees(-getHeading() + RobotContainer.getInstance().getTurret().getPosition()))); //actually, this might not be right so TODO
+        resetOdometry(fromPoint2d(cartesianTargetCoordinates(), Rotation2d.fromDegrees(getHeading())));// + RobotContainer.getInstance().getTurret().getPosition()))); //actually, this might not be right so TODO
     }
     public Pose2d fromPoint2d(Point2d point, Rotation2d rotation){
         double x = point.getX();
@@ -213,8 +216,9 @@ public class RobotState {
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putNumber("R encoder dist", driveTrain.rEncoderPosition());
         SmartDashboard.putNumber("L encoder dist", driveTrain.lEncoderPosition());
-        //SmartDashboard.putNumber("pigeon rough x", pigeon.getRoughOdometry().getX());
-        //SmartDashboard.putNumber("pigeon rough y", pigeon.getRoughOdometry().getY());
+        SmartDashboard.putNumber("pigeon rough x", pigeon.getRoughOdometry().getX());
+        SmartDashboard.putNumber("pigeon rough y", pigeon.getRoughOdometry().getY());
+        SmartDashboard.putBoolean("pigeon bumped", pigeon.wasBumped());
         //SmartDashboard.putString("Current color", getCurrentColorString());
         //SmartDashboard.putString("Goal color", getGoalColorString());
     }
