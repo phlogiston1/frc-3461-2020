@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoAim;
 import frc.robot.commands.CheesyDrive;
+import frc.robot.commands.IntakeOff;
+import frc.robot.commands.IntakeOn;
 import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.commands.auto.paths.TestPath;
 import frc.lib.Limelight;
@@ -36,6 +38,7 @@ public class RobotContainer {
   private static final DriveTrain driveTrain = new DriveTrain();
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
   private static final Turret turret = new Turret();
+  private static final Intake intake = new Intake();
   private static RobotContainer instance;
   private static SendableChooser<Command> driveChooser = new SendableChooser<Command>();
 
@@ -82,9 +85,11 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   JoystickButton autoAimBtn = new JoystickButton(oprJoy, 6);
-
+  JoystickButton intakeBtn = new JoystickButton(oprJoy, 5);
   private void configureButtonBindings() {
     autoAimBtn.whileHeld(new AutoAim(turret, driveTrain, camera, robotState));
+    intakeBtn.whenPressed(new IntakeOn(intake));
+    intakeBtn.whenReleased(new IntakeOff(intake));
   }
 
   public Joystick getOperatorJoystick() {

@@ -116,6 +116,10 @@ public class RobotState {
     public double targetAngleFromCamera(){
         return camera.getTargetOffsetX();
     }
+    /**
+     * get the angle of the target taking into account the angle of the turret.
+     * @return the angle in degrees as a double
+     */
     public double targetAngleFromRobot(){
         return camera.getTargetOffsetX() - RobotContainer.getInstance().getTurret().getPosition();
     }
@@ -172,6 +176,12 @@ public class RobotState {
         //pigeon.update(RobotContainer.getInstance().getTurret().getPosition()); //FIXME
         resetOdometry(fromPoint2d(cartesianTargetCoordinates(), Rotation2d.fromDegrees(getHeading())));// + RobotContainer.getInstance().getTurret().getPosition()))); //actually, this might not be right so TODO
     }
+    /**
+     * get a pose2d from a point2d and a rotation
+     * @param point Point2d xy coordinates
+     * @param rotation Rotation2d rotation
+     * @return Pose2d combination
+     */
     public Pose2d fromPoint2d(Point2d point, Rotation2d rotation){
         double x = point.getX();
         double y = point.getY();

@@ -30,7 +30,8 @@ public final class Constants {
                             CHIMNEY_MOTOR_L = 10,
                             CHIMNEY_MOTOR_R = 11,
                             BEAM_BREAK_1 = 12,
-                            BEAM_BREAK_2 = 13;
+                            BEAM_BREAK_2 = 13,
+                            INTAKE_MOTOR = 14;
     //physical dimensions
     public static final double DRIVETRAIN_TRACKWIDTH = 0.6, // all these need to be updated + idk what units yet. all will prob be meters.
                                 CAMERA_ANGLE = 0,

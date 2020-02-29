@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import java.io.IOException;
-
 import com.revrobotics.CANEncoder;
 
 import com.revrobotics.CANPIDController;
@@ -65,7 +63,7 @@ public class Turret extends SubsystemBase {
     if(!autoAiming){
       setSpeed(RobotContainer.getInstance().getOperatorJoystick().getZ());
     }
-    if(RobotContainer.getInstance().getOperatorJoystick().getRawButton(5)){
+    if(RobotContainer.getInstance().getOperatorJoystick().getRawButton(7)){
       turretEnc.setPosition(0);
     }
     SmartDashboard.putNumber("turret position", turretEnc.getPosition());

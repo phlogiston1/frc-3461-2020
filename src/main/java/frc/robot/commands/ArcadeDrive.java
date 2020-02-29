@@ -46,17 +46,9 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     //get the joystick x/y
-    double nlin = 0.8;
     double x = drvJoy.getX();
     double y = -drvJoy.getY();
     //slow it down to half speed so that it can actually work like a differential.
-    /*double denominator = Math.sin(Math.PI / 2 * nlin);
-    x = Math.sin(Math.PI / 2 * nlin * x) / denominator;
-    x = Math.sin(Math.PI / 2 * nlin * x)/denominator;
-    x = Math.sin(Math.PI / 2 * nlin * x)/denominator;
-    y = Math.sin(Math.PI / 2 * nlin * y)/denominator;
-    y = Math.sin(Math.PI / 2 * nlin * y)/denominator;
-    y = Math.sin(Math.PI / 2 * nlin * y)/denominator;*/
     if(drvJoy.getRawButton(2)){
       y /= 2;
       x /= 2;

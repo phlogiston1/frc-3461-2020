@@ -11,7 +11,6 @@ import frc.robot.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.math.CubicSplineInterpolate;
-import frc.lib.math.PolarPoint2d;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.lib.Limelight;
@@ -35,6 +34,13 @@ public class AutoAim extends CommandBase {
   double targetOdometryErrorCorrector;
   boolean scanDirection = false;
 
+  /**
+   * AutoAim to automatically adjust the turret to the target.
+   * @param subsystem The turret
+   * @param dt The drivetrain
+   * @param camera Limelight for vision
+   * @param rs RobotState to get the angle stuff.
+   */
   public AutoAim(Turret subsystem, DriveTrain dt, Limelight camera, RobotState rs) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -52,7 +58,7 @@ public Limelight getCamera(){
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println(">>>>>>>STARTED<<<<<<<<<<");
+    //System.out.println(">>>>>>>STARTED<<<<<<<<<<");
     camera_.setLedOn();
     camera_.setModeVision();
   }
@@ -60,13 +66,13 @@ public Limelight getCamera(){
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(">>>>>>>>EXIc<<<<<<<<<<");
+    //System.out.println(">>>>>>>>EXIc<<<<<<<<<<");
     kP = .15;
     kI = 0.003;
     kD = 0.02;
     double error = camera_.getTargetOffsetX();
-    double odometryError = state.getTargetFromOdometry().getRotation2dP().getDegrees();
-    odometryError -= turret.getPosition();
+    double odometryError = state.getTargetFromOdometry().getRotation2dP().getDegrees(); //wow error from odometry
+    odometryError -= turret.getPosition(); //robotStates odometryError doesn't take into account turret position
     if(odometryAim){
       camera_.setLedOff();
       camera_.setModeDrive();

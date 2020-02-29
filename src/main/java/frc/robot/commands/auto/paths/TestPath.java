@@ -8,11 +8,6 @@
 package frc.robot.commands.auto.paths;
 
 import java.io.IOException;
-import java.util.List;
-
-import edu.wpi.first.wpilibj.geometry.*;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.subsystems.DriveTrain;
 
@@ -30,7 +25,7 @@ public class TestPath extends PathBase {
     public TestPath(DriveTrain subsystem) throws IOException {
         super(subsystem);
         //create a new trajectory
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        /*Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0,0,new Rotation2d(0)),
         List.of(
             new Translation2d(1,0.5),
@@ -40,7 +35,7 @@ public class TestPath extends PathBase {
         ),
         new Pose2d(1,0.5, Rotation2d.fromDegrees(0)),
         getTrajectoryConfig()
-        );
+        );*/
         //set the trajectory
         setTrajectory(getPathweaverTrajectory("output/Unnamed_0.wpilib.json"));
         System.out.println("trajectory ready");
