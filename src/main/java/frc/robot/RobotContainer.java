@@ -18,9 +18,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoAim;
+import frc.robot.commands.CarGameCheesyDrive;
 import frc.robot.commands.CheesyDrive;
 import frc.robot.commands.IntakeOff;
 import frc.robot.commands.IntakeOn;
+import frc.robot.commands.IntakeRetract;
+import frc.robot.commands.TankDrive;
 import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.commands.auto.paths.TestPath;
 import frc.lib.Limelight;
@@ -50,8 +53,9 @@ public class RobotContainer {
 
   public RobotContainer() {
     driveChooser.addOption("Arcade Drive", new ArcadeDrive(driveTrain));
-    driveChooser.addOption("Cheesy Drive", new CheesyDrive(driveTrain));
-    driveChooser.addOption("Tank Drive (not made yet)", new ArcadeDrive(driveTrain));
+    driveChooser.setDefaultOption("Cheesy Drive", new CheesyDrive(driveTrain));
+    driveChooser.addOption("Tank Drive", new TankDrive(driveTrain));
+    driveChooser.addOption("Car Game Cheesy Drive", new CarGameCheesyDrive(driveTrain));
     // Configure the button bindings
     System.out.println("initializing robot container");
     configureButtonBindings();
@@ -64,7 +68,7 @@ public class RobotContainer {
     return instance;
   }
   public static Command getDriveCommand(){
-    return driveChooser.getSelected();
+    return new CheesyDrive(driveTrain);//driveChooser.getSelected();
   }
   public Limelight getLimelight() {
     return camera;
@@ -86,10 +90,12 @@ public class RobotContainer {
    */
   JoystickButton autoAimBtn = new JoystickButton(oprJoy, 6);
   JoystickButton intakeBtn = new JoystickButton(oprJoy, 5);
+  JoystickButton intakeUp = new JoystickButton(oprJoy, 7);
   private void configureButtonBindings() {
     autoAimBtn.whileHeld(new AutoAim(turret, driveTrain, camera, robotState));
     intakeBtn.whenPressed(new IntakeOn(intake));
     intakeBtn.whenReleased(new IntakeOff(intake));
+    intakeUp.whenPressed(new IntakeRetract(intake));
   }
 
   public Joystick getOperatorJoystick() {

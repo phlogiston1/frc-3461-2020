@@ -7,25 +7,41 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.lib.util.CheesyDriveHelper;
+import frc.robot.subsystems.DriveTrain;
 
-public class IntakeOff extends CommandBase {
-  Intake intake;
-  public IntakeOff(Intake subsystem) {
+public class CarGameCheesyDrive extends CommandBase {
+  /**
+   * Creates a new CarGameCheesyDrive.
+   */
+  DriveTrain dt;
+  public static Joystick drvJoy = new Joystick(0);
+  CheesyDriveHelper cd = new CheesyDriveHelper();
+  public CarGameCheesyDrive(DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
-    intake = subsystem;
-    addRequirements(intake);
+    addRequirements(driveTrain);
+    dt = driveTrain;
   }
-// Called when the command is initially scheduled.
+
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.setSpeed(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double spd = drvJoy.getRawAxis(0) - drvJoy.getRawAxis(0);//todo get throttle and joystick axes
+    double rot = drvJoy.getRawAxis(0);
+    boolean quickturn = false;
+    if(drvJoy.getRawButton(0)){
+      quickturn = true;
+    }else{
+      quickturn = false;
+    }
+    dt.arcadeDrive(cd.cheesyDrive(spd,rot,quickturn,true));
   }
 
   // Called once the command ends or is interrupted.

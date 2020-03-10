@@ -66,39 +66,40 @@ public Limelight getCamera(){
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //System.out.println(">>>>>>>>EXIc<<<<<<<<<<");
+    //set the constants
     kP = .15;
     kI = 0.003;
     kD = 0.02;
     double error = camera_.getTargetOffsetX();
     double odometryError = state.getTargetFromOdometry().getRotation2dP().getDegrees(); //wow error from odometry
     odometryError -= turret.getPosition(); //robotStates odometryError doesn't take into account turret position
-    if(odometryAim){
+    if(odometryAim){ //if we're using odometry we dont need the camera to be ready
       camera_.setLedOff();
       camera_.setModeDrive();
     }else{
-      targetOdometryErrorCorrector = 0;
       camera_.setLedOn();
       camera_.setModeVision();
       state.updateOdometryFromVision();
-      //turret.turretEnc.setPosition(0);
-      targetOdometryErrorCorrector = odometryError - camera_.getTargetOffsetX();
     }
-    //odometryError -= targetOdometryErrorCorrector;
+
     SmartDashboard.putNumber("odometry error",odometryError);
     SmartDashboard.putNumber("odometry error error",targetOdometryErrorCorrector);
+
     if(odometryAim) error = odometryError;
+
     integral += kI * (error/loopTime);
     if(integral > .25 || error < .01)
       integral = 0;
-    double PID = kP * error + integral + kD * ((prevError - error)/loopTime);
+
+    double PID = kP * error + integral + kD * ((prevError - error)/loopTime); //do the pid calculations
     prevError = error;
-    System.out.println(PID);
+
+    //System.out.println(PID);
     if(camera_.hasTarget() == 1){
       turret.setSpeed(PID);
     }else{
-      if(scanDirection){
-        if(turret.getPosition() < 180){
+      if(scanDirection){ //TODO test me
+        if(turret.getPosition() < 180){ //FIXME will have issues with soft limit
           turret.setSpeed(0.4);
         }else{
           scanDirection = !scanDirection;

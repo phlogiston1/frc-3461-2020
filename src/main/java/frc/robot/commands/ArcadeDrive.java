@@ -94,7 +94,7 @@ public class ArcadeDrive extends CommandBase {
         }
       }
     }
-    //_drive.shift(gear); TODO get the pneumatics in the robot so I can test this!
+    _drive.shift(gear);
   }
 
   // Called once the command ends or is interrupted.

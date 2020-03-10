@@ -14,7 +14,7 @@ import frc.robot.subsystems.DriveTrain;
 
 public class CheesyDrive extends CommandBase {
   /**
-   * Creates a new CheesyDriveTesting.
+   * Creates a new CheesyDrive.
    */
   DriveTrain dt;
   public static Joystick drvJoy = new Joystick(0);

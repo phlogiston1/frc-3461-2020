@@ -7,25 +7,32 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.DriveTrain;
 
-public class IntakeOff extends CommandBase {
-  Intake intake;
-  public IntakeOff(Intake subsystem) {
+public class TankDrive extends CommandBase {
+  /**
+   * Creates a new TankDrive.
+   */
+  Joystick drvJoy1 = new Joystick(0);
+  Joystick drvJoy2 = new Joystick(2);
+  DriveTrain dt;
+  public TankDrive(DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
-    intake = subsystem;
-    addRequirements(intake);
+    addRequirements(driveTrain);
+    dt = driveTrain;
   }
-// Called when the command is initially scheduled.
+
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.setSpeed(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    dt.arcadeDrive(drvJoy1.getY(), drvJoy2.getY());
   }
 
   // Called once the command ends or is interrupted.

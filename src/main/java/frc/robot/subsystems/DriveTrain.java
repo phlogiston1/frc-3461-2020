@@ -7,12 +7,16 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.DriveSignal;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.CheesyDrive;
 
 public class DriveTrain extends SubsystemBase {
     public WPI_TalonFX lFalcon1 = new WPI_TalonFX(Constants.DRIVE_LEFT_1);
@@ -21,11 +25,11 @@ public class DriveTrain extends SubsystemBase {
     public WPI_TalonFX rFalcon2 = new WPI_TalonFX(Constants.DRIVE_RIGHT_2);
     public static final double wheelDiameter = Math.PI * Constants.WHEEL_DIAMETER_METERS;
     public DifferentialDrive dDrive = new DifferentialDrive(lFalcon1, rFalcon1);
-    //public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
+    public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
     private Gear _gear = Gear.LOW_GEAR;
     double[] ypr = new double[3];
     public DriveTrain() {
-        setDefaultCommand(RobotContainer.getDriveCommand()); //TODO testme idk if this works
+        setDefaultCommand(new ArcadeDrive(this)); //TODO testme idk if this works
         lFalcon2.follow(lFalcon1);
         rFalcon2.follow(rFalcon1);
         //set inverted motors
@@ -41,7 +45,6 @@ public class DriveTrain extends SubsystemBase {
         lFalcon1.setSensorPhase(false);
 
     }
-    /*
     public void shift(Gear gear){
         if(gear == Gear.HIGH_GEAR){
             shiftSolenoid.set(Value.kForward);
@@ -53,7 +56,7 @@ public class DriveTrain extends SubsystemBase {
             shiftSolenoid.set(Value.kOff);
         }
         _gear = gear;
-    }*/
+    }
     public Gear getGear(){
         return  _gear;
     }
