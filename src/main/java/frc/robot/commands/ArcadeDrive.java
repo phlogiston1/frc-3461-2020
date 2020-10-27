@@ -22,7 +22,7 @@ public class ArcadeDrive extends CommandBase {
   /**
    * Creates a new Drive.
    */
-  public DriveTrain _drive;
+  public DriveTrain _drive; //shorter name for something that is used alot
   public static Joystick drvJoy = new Joystick(0);
   public boolean autoShifting = false;
   public static Gear gear = Gear.HIGH_GEAR;

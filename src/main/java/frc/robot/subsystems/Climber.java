@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase {
   /**
-   * Creates a new Climber.
+   * Will add comments when thing is build (& code is tested)
    */
   DoubleSolenoid pto = new DoubleSolenoid(2,3);
   public Climber(DriveTrain dt) {

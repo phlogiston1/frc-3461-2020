@@ -41,7 +41,7 @@ public class CheesyDrive extends CommandBase {
     }else{
       quickturn = false;
     }
-    dt.arcadeDrive(cd.cheesyDrive(spd, rot, quickturn, true));
+    dt.arcadeDrive(cd.cheesyDrive(spd, rot, quickturn, true)); //todo implement ishighgear
   }
 
   // Called once the command ends or is interrupted.

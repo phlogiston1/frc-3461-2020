@@ -51,7 +51,7 @@ public class AutoAim extends CommandBase {
     hoodSpline.setSamples(Constants.limelightSampleDistances, Constants.hoodAngles);
   }
 
-public Limelight getCamera(){
+  public Limelight getCamera(){
     return camera_;
   }
 
@@ -59,6 +59,7 @@ public Limelight getCamera(){
   @Override
   public void initialize() {
     //System.out.println(">>>>>>>STARTED<<<<<<<<<<");
+    //prepare the camera for vision
     camera_.setLedOn();
     camera_.setModeVision();
   }
@@ -67,12 +68,18 @@ public Limelight getCamera(){
   @Override
   public void execute() {
     //set the constants
+    //todo move these to constants
     kP = .15;
     kI = 0.003;
     kD = 0.02;
-    double error = camera_.getTargetOffsetX();
+
+    double error = camera_.getTargetOffsetX(); //get how far the turret is from pointing at the target
+
+    //this code tries to keep the turret pointed at the target all the time using odometry, even when the camera is off
     double odometryError = state.getTargetFromOdometry().getRotation2dP().getDegrees(); //wow error from odometry
     odometryError -= turret.getPosition(); //robotStates odometryError doesn't take into account turret position
+
+
     if(odometryAim){ //if we're using odometry we dont need the camera to be ready
       camera_.setLedOff();
       camera_.setModeDrive();
@@ -82,16 +89,21 @@ public Limelight getCamera(){
       state.updateOdometryFromVision();
     }
 
+    //debugging info help me pls
     SmartDashboard.putNumber("odometry error",odometryError);
     SmartDashboard.putNumber("odometry error error",targetOdometryErrorCorrector);
 
+    // if we're using odometry, we dont need vision error, so set error to odometry error for simplicity
     if(odometryAim) error = odometryError;
 
+    //calculate PID:
     integral += kI * (error/loopTime);
     if(integral > .25 || error < .01)
       integral = 0;
 
     double PID = kP * error + integral + kD * ((prevError - error)/loopTime); //do the pid calculations
+    //end calculate PID
+
     prevError = error;
 
     //System.out.println(PID);

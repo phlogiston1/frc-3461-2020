@@ -42,7 +42,9 @@ public class RobotContainer {
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
   private static final Turret turret = new Turret();
   private static final Intake intake = new Intake();
+
   private static RobotContainer instance;
+
   private static SendableChooser<Command> driveChooser = new SendableChooser<Command>();
 
   private static final RobotState robotState = new RobotState(driveTrain, camera);
@@ -61,15 +63,20 @@ public class RobotContainer {
     configureButtonBindings();
     SmartDashboard.putData(driveChooser);
   }
+
+
   public static RobotContainer getInstance(){
     if (instance == null) {
       instance = new RobotContainer();
     }
     return instance;
   }
+
   public static Command getDriveCommand(){
+    //todo why is this set like this??
     return new CheesyDrive(driveTrain);//driveChooser.getSelected();
   }
+
   public Limelight getLimelight() {
     return camera;
   }

@@ -21,9 +21,11 @@
     "maxacceleration",
     "maxspeed",
     "maxvoltage",
+    "shootah",
     "tinterp",
     "tlong",
     "tshort",
-    "tvert"
+    "tvert",
+    "yess"
   ]
 }

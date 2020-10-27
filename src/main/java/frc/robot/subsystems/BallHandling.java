@@ -14,7 +14,7 @@ import frc.robot.Constants;
 
 public class BallHandling extends SubsystemBase {
   /**
-   * Creates a new ExampleSubsystem.
+   * will add comments when the thing is built (& code is tested)
    */
   public Spark hopper_l = new Spark(Constants.HOPPER_MOTOR_L);
   public Spark hopper_r = new Spark(Constants.HOPPER_MOTOR_R);

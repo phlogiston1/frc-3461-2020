@@ -12,13 +12,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.util.CheesyDriveHelper;
 import frc.robot.subsystems.DriveTrain;
 
+/**
+ * cheesy drive using car-game style controls with an xbox controller
+ */
 public class CarGameCheesyDrive extends CommandBase {
   /**
    * Creates a new CarGameCheesyDrive.
    */
   DriveTrain dt;
   public static Joystick drvJoy = new Joystick(0);
-  CheesyDriveHelper cd = new CheesyDriveHelper();
+  CheesyDriveHelper cd = new CheesyDriveHelper(); //Thank you team 254, your code is now mine!
   public CarGameCheesyDrive(DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
@@ -41,7 +44,7 @@ public class CarGameCheesyDrive extends CommandBase {
     }else{
       quickturn = false;
     }
-    dt.arcadeDrive(cd.cheesyDrive(spd,rot,quickturn,true));
+    dt.arcadeDrive(cd.cheesyDrive(spd,rot,quickturn,true)); //todo implement ishighgear
   }
 
   // Called once the command ends or is interrupted.

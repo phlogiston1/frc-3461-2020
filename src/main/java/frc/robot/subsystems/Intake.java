@@ -7,11 +7,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -21,20 +17,36 @@ import frc.robot.commands.IntakeOff;
 //import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class Intake extends SubsystemBase {
   /**
-   * Creates a new ExampleSubsystem.
+   * Simple code to control intake
    */
+  //self explanatory
   private WPI_TalonSRX intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR);
   private DoubleSolenoid intakeSolenoid = new DoubleSolenoid(2,3);
+
   public Intake() {
+    //dont start spinning as soon as robot turned on.
     setDefaultCommand(new IntakeOff(this));
   }
+
+  /**
+   * set intake roller velocity
+   * @param speed speed from -1 to 1
+   */
   public void setSpeed(double speed) {
     System.out.println(speed);
     intakeMotor.set(speed);
   }
+
+  /**
+   * lower the intake
+   */
   public void extend(){
     intakeSolenoid.set(Value.kForward);
   }
+
+  /**
+   * raise the intake
+   */
   public void retract(){
     intakeSolenoid.set(Value.kReverse);
   }
