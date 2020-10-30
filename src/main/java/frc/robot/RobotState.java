@@ -173,7 +173,7 @@ public class RobotState {
      * updates odometry using the cartesian target coordinates.
      */
     public void updateOdometryFromVision(){
-        //pigeon.update(RobotContainer.getInstance().getTurret().getPosition()); //FIXME
+        //pigeon.update(RobotContainer.getInstance().getTurret().getPosition()); //FIXME needs some work 2 get right
         resetOdometry(fromPoint2d(cartesianTargetCoordinates(), Rotation2d.fromDegrees(getHeading())));// + RobotContainer.getInstance().getTurret().getPosition()))); //actually, this might not be right so TODO
     }
     /**

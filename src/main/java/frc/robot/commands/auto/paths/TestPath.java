@@ -8,7 +8,6 @@
 package frc.robot.commands.auto.paths;
 
 import java.io.IOException;
-import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.subsystems.DriveTrain;
 
 /**

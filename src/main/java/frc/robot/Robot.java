@@ -79,7 +79,6 @@ public class Robot extends TimedRobot {
     try {
       m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
