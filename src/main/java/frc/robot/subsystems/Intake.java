@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import static frc.robot.Constants.*;
 import frc.robot.commands.IntakeOff;
 //import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class Intake extends SubsystemBase {
@@ -20,8 +20,8 @@ public class Intake extends SubsystemBase {
    * Simple code to control intake
    */
   //self explanatory
-  private WPI_TalonSRX intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR);
-  private DoubleSolenoid intakeSolenoid = new DoubleSolenoid(2,3);
+  private WPI_TalonSRX intakeMotor = new WPI_TalonSRX(INTAKE_MOTOR);
+  private DoubleSolenoid intakeSolenoid = new DoubleSolenoid(INTAKE_SOLENOID_A,INTAKE_SOLENOID_B);
 
   public Intake() {
     //dont start spinning as soon as robot turned on.
