@@ -20,7 +20,7 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
     //create the motors
     private TalonFX masterTalon = new TalonFX(Constants.SHOOTER_MOTOR_1);
-    private TalonFX slaveTalon = new TalonFX(Constants.SHOOTER_MOTOR_2);
+    private TalonFX slaveTalon = new TalonFX(Constants.SHOOTER_MOTOR_2); 
 
     /**
      * creates a new shootah

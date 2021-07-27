@@ -134,7 +134,7 @@ public class PathBase extends CommandBase implements Action{
         ramsete = new RamseteCommand(
             trajectory_,
             RobotContainer.getRobotState()::getCurrentPose,
-            new RamseteController(0, 0),
+            new RamseteController(Constants.ramsete_b, Constants.ramsete_zeta),
             new SimpleMotorFeedforward(
                 Constants.odo_kS,
                 Constants.odo_kV,

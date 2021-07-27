@@ -11,30 +11,31 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class BallHandling extends SubsystemBase {
   /**
    * will add comments when the thing is built (& code is tested)
    */
-  public Spark hopper_l = new Spark(Constants.HOPPER_MOTOR_L);
-  public Spark hopper_r = new Spark(Constants.HOPPER_MOTOR_R);
-  public Spark chimney_l = new Spark(Constants.CHIMNEY_MOTOR_L);
-  public Spark chimney_r = new Spark(Constants.CHIMNEY_MOTOR_R);
+  public TalonSRX hopper_l = new TalonSRX(Constants.HOPPER_MOTOR_L);
+  //public Spark hopper_r = new Spark(Constants.HOPPER_MOTOR_R);
+  public TalonSRX chimney_l = new TalonSRX(Constants.CHIMNEY_MOTOR_L);
+  //public Spark chimney_r = new Spark(Constants.CHIMNEY_MOTOR_R);
   public DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1); //TODO beam break
   public DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_2);
   public BallHandling() {
   }
   public void setHopperSpeed(double speed){
     hopper_l.set(speed); //todo check directions
-    hopper_r.set(-speed);
+    //hopper_r.set(-speed);
   }
   public void setHopperSpeed(double rSpeed, double lSpeed){
-    hopper_r.set(rSpeed);
+    //hopper_r.set(rSpeed);
     hopper_l.set(lSpeed);
   }
   public void setChimneySpeed(double speed){
     chimney_l.set(speed); //todo check directions
-    chimney_r.set(-speed);
+    //chimney_r.set(-speed);
   }
   public boolean lowerBeamBreakTripped(){
     return beamBreak1.get();

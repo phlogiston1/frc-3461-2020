@@ -35,7 +35,6 @@ public class DriveTrain extends SubsystemBase {
     double[] ypr = new double[3]; //todo cant remember wat this does
     public DriveTrain() {
         setDefaultCommand(new ArcadeDrive(this)); //TODO testme idk if this works
-
         //set motors on each side to follow each other
         lFalcon2.follow(lFalcon1);
         rFalcon2.follow(rFalcon1);
@@ -63,7 +62,7 @@ public class DriveTrain extends SubsystemBase {
      * shift the drivetrain into high, low, or MAYBE neutral gear
      * @param gear the drivetrain.gear to shift into
      */
-    public void shift(Gear gear){
+    public void shift(Gear gear) {
         if(gear == Gear.HIGH_GEAR){
             shiftSolenoid.set(Value.kForward);
         }
@@ -223,3 +222,4 @@ public class DriveTrain extends SubsystemBase {
         NEUTRAL;
     }
 }
+
