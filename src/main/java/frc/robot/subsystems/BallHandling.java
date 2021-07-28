@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class BallHandling extends SubsystemBase {
   /**
    * will add comments when the thing is built (& code is tested)
    */
-  public TalonSRX hopper_l = new TalonSRX(Constants.HOPPER_MOTOR_L);
+  public WPI_TalonSRX hopper_l = new WPI_TalonSRX(Constants.HOPPER_MOTOR_L);
   //public Spark hopper_r = new Spark(Constants.HOPPER_MOTOR_R);
-  public TalonSRX chimney_l = new TalonSRX(Constants.CHIMNEY_MOTOR_L);
+  public WPI_TalonSRX chimney_l = new WPI_TalonSRX(Constants.CHIMNEY_MOTOR_L);
   //public Spark chimney_r = new Spark(Constants.CHIMNEY_MOTOR_R);
   public DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1); //TODO beam break
   public DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_2);
