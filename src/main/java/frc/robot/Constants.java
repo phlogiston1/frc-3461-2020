@@ -26,9 +26,9 @@ public final class Constants {
                             SHOOTER_MOTOR_1 = 6,
                             SHOOTER_MOTOR_2 = 7,
                             HOPPER_MOTOR_L = 8,
-                            HOPPER_MOTOR_R = 9,
+                            HOPPER_MOTOR_R = 9, //TODO Remove, Not in use
                             CHIMNEY_MOTOR_L = 10,
-                            CHIMNEY_MOTOR_R = 11,
+                            CHIMNEY_MOTOR_R = 11, //TODO Remove, Not in use
                             BEAM_BREAK_1 = 12,
                             BEAM_BREAK_2 = 13,
                             INTAKE_MOTOR = 5,
