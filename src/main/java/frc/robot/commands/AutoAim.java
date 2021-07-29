@@ -124,7 +124,7 @@ public class AutoAim extends CommandBase {
         }
       }
     }
-    odometryAim = !RobotContainer.getInstance().getOperatorJoystick().getRawButton(8);
+    odometryAim = !RobotContainer.getInstance().getOperatorJoystick().getRawButton(Constants.ButtonMappings.limelightAimSelector);
   }
 
   // Called once the command ends or is interrupted.

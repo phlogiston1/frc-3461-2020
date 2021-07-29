@@ -17,24 +17,24 @@ public class BallHandling extends SubsystemBase {
   /**
    * will add comments when the thing is built (& code is tested)
    */
-  public WPI_TalonSRX hopper_l = new WPI_TalonSRX(Constants.HOPPER_MOTOR_L);
+  public WPI_TalonSRX hopper = new WPI_TalonSRX(Constants.HOPPER_MOTOR);
   //public WPI_TalonSRX hopper_r = new WPI_TalonSRX(Constants.HOPPER_MOTOR_R);
-  public WPI_TalonSRX chimney_l = new WPI_TalonSRX(Constants.CHIMNEY_MOTOR_L);
+  public WPI_TalonSRX chimney = new WPI_TalonSRX(Constants.CHIMNEY_MOTOR);
   //public WPI_TalonSRX chimney_r = new WPI_TalonSRX(Constants.CHIMNEY_MOTOR_R);
   public DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1); //TODO beam break
   public DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_2);
   public BallHandling() {
   }
   public void setHopperSpeed(double speed){
-    hopper_l.set(speed); //todo check directions
+    hopper.set(speed); //todo check directions
     //hopper_r.set(-speed);
   }
   public void setHopperSpeed(double rSpeed, double lSpeed){
     //hopper_r.set(rSpeed);
-    hopper_l.set(lSpeed);
+    hopper.set(lSpeed);
   }
   public void setChimneySpeed(double speed){
-    chimney_l.set(speed); //todo check directions
+    chimney.set(speed); //todo check directions
     //chimney_r.set(-speed);
   }
   public boolean lowerBeamBreakTripped(){

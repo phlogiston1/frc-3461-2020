@@ -21,17 +21,15 @@ public final class Constants {
                             DRIVE_LEFT_2 = 1,
                             DRIVE_RIGHT_1 = 2,
                             DRIVE_RIGHT_2 = 3,
-                            PIGEON_IMU = 4,
+                            PIGEON_IMU = 20,
                             TURRET_PORT = 3,
                             SHOOTER_MOTOR_1 = 6,
                             SHOOTER_MOTOR_2 = 7,
-                            HOPPER_MOTOR_L = 8,
-                            HOPPER_MOTOR_R = 9, //TODO Remove, Not in use
-                            CHIMNEY_MOTOR_L = 10,
-                            CHIMNEY_MOTOR_R = 11, //TODO Remove, Not in use
+                            HOPPER_MOTOR = 7,
+                            CHIMNEY_MOTOR = 8,
                             BEAM_BREAK_1 = 12,
                             BEAM_BREAK_2 = 13,
-                            INTAKE_MOTOR = 5,
+                            INTAKE_MOTOR = 6,
                             INTAKE_SOLENOID_A = 2,
                             INTAKE_SOLENOID_B = 3;
     //physical dimensions
@@ -79,4 +77,20 @@ public final class Constants {
     public static double kWheelDiameterMeters;
     public static double lowGearAutoShiftMultiplier = 0;
     public static double shiftThreshold = 0.2;
+
+    //default speeds:
+    public static double hopperSpeed = 0.2,
+                         chimneySpeed = 0.2;
+
+    public static class ButtonMappings{
+        public static final int driveJoystickPort = 0,
+                                operatorJoystickPort = 1;
+        //todo everything
+        public static final int autoAim = 6,
+                                limelightAimSelector = 8,
+                                intakeOn = 5,
+                                intakeUp = 7,
+                                runBallFeed = 0,
+                                emergencyReverseBallFeed = 0;
+    }
 }
