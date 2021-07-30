@@ -17,14 +17,14 @@ package frc.robot;
  */
 public final class Constants {
     //port numbers
-    public static final int DRIVE_LEFT_1 = 0,
-                            DRIVE_LEFT_2 = 1,
-                            DRIVE_RIGHT_1 = 2,
-                            DRIVE_RIGHT_2 = 3,
+    public static final int DRIVE_LEFT_1 = 0, //Lower
+                            DRIVE_LEFT_2 = 1, //Upper 
+                            DRIVE_RIGHT_1 = 2, //Lower
+                            DRIVE_RIGHT_2 = 3,//Upper
                             PIGEON_IMU = 20,
                             TURRET_PORT = 3,
-                            SHOOTER_MOTOR_1 = 6,
-                            SHOOTER_MOTOR_2 = 7,
+                            SHOOTER_MOTOR_1 = 5,
+                            SHOOTER_MOTOR_2 = 4,
                             HOPPER_MOTOR = 7,
                             CHIMNEY_MOTOR = 8,
                             BEAM_BREAK_1 = 12,
@@ -90,7 +90,7 @@ public final class Constants {
                                 limelightAimSelector = 8,
                                 intakeOn = 5,
                                 intakeUp = 7,
-                                runBallFeed = 0,
+                                runBallFeed = 1,
                                 emergencyReverseBallFeed = 0;
     }
 }
