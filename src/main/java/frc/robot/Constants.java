@@ -22,7 +22,7 @@ public final class Constants {
                             DRIVE_RIGHT_1 = 2, //Lower
                             DRIVE_RIGHT_2 = 3,//Upper
                             PIGEON_IMU = 20,
-                            TURRET_PORT = 3,
+                            TURRET_PORT = 9,
                             SHOOTER_MOTOR_1 = 5,
                             SHOOTER_MOTOR_2 = 4,
                             HOPPER_MOTOR = 7,
@@ -30,8 +30,10 @@ public final class Constants {
                             BEAM_BREAK_1 = 12,
                             BEAM_BREAK_2 = 13,
                             INTAKE_MOTOR = 6,
-                            INTAKE_SOLENOID_A = 2,
-                            INTAKE_SOLENOID_B = 3;
+                            INTAKE_SOLENOID_A = 3,
+                            INTAKE_SOLENOID_B = 2,
+                            SHIFT_SOLENOID_A = 0,
+                            SHIFT_SOLENOID_B = 1;
     //physical dimensions
     public static final double DRIVETRAIN_TRACKWIDTH = 0.6, // all these need to be updated + idk what units yet. all will prob be meters.
                                 CAMERA_ANGLE = 0,
@@ -62,10 +64,10 @@ public final class Constants {
                          odo_kV               = 2.08,
                          odo_kA               = 0.208,
                          odo_kP               = 0.02,
-                         shooter_kP           = 0,
+                         shooter_kP           = 0.5,
                          shooter_kI           = 0,
                          shooter_kD           = 0,
-                         shooter_kF           = 0,
+                         shooter_kF           = 0.06,
                          bump_acceleration_thresh = 0;
     //limelight
     public static double[] hoodAngles =           {0,2,5,7,30,45}; //some data in degrees
@@ -79,18 +81,18 @@ public final class Constants {
     public static double shiftThreshold = 0.2;
 
     //default speeds:
-    public static double hopperSpeed = 0.2,
-                         chimneySpeed = 0.2;
+    public static double hopperSpeed = -0.3,
+                         chimneySpeed = 1;
 
     public static class ButtonMappings{
         public static final int driveJoystickPort = 0,
                                 operatorJoystickPort = 1;
         //todo everything
         public static final int autoAim = 6,
-                                limelightAimSelector = 8,
+                                limelightAimSelector = 6,
                                 intakeOn = 5,
                                 intakeUp = 7,
                                 runBallFeed = 1,
-                                emergencyReverseBallFeed = 0;
+                                emergencyReverseBallFeed = 10;
     }
 }

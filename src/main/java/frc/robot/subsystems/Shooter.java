@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
       //follow motors
       slaveTalon.follow(masterTalon);
       masterTalon.setInverted(false); //TODO make sure motor is spinning forwards
-      slaveTalon.setInverted(InvertType.FollowMaster); //TODO make sure motors aren't fighting
+      slaveTalon.setInverted(InvertType.InvertMotorOutput); //TODO make sure motors aren't fighting
 
       //set pidf constants
       masterTalon.config_kP(0, Constants.shooter_kP);
@@ -58,11 +58,11 @@ public class Shooter extends SubsystemBase {
     /**
      * dont know if this is ever used, reset pidf gains to the values in Constants
      */
-    public void reconfigureTalonGains(){
-      masterTalon.config_kP(0, Constants.shooter_kP);
-      masterTalon.config_kI(0, Constants.shooter_kI);
-      masterTalon.config_kD(0, Constants.shooter_kD);
-      masterTalon.config_kF(0, Constants.shooter_kF);
+    public void setTalonGains(double p, double i, double d, double f){
+      masterTalon.config_kP(0, p);
+      masterTalon.config_kI(0, i);
+      masterTalon.config_kD(0, d);
+      masterTalon.config_kF(0, f);
     }
 
     //self explanatory

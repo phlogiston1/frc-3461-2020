@@ -29,7 +29,7 @@ public class DriveTrain extends SubsystemBase {
     public DifferentialDrive dDrive = new DifferentialDrive(lFalcon1, rFalcon1);
 
     //shifter stuff
-    public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(0,1);
+    public DoubleSolenoid shiftSolenoid = new DoubleSolenoid(21, Constants.SHIFT_SOLENOID_A,Constants.SHIFT_SOLENOID_B);
     private Gear _gear = Gear.LOW_GEAR;
 
     double[] ypr = new double[3]; //todo cant remember wat this does

@@ -21,11 +21,12 @@ public class Intake extends SubsystemBase {
    */
   //self explanatory
   private WPI_TalonSRX intakeMotor = new WPI_TalonSRX(INTAKE_MOTOR);
-  private DoubleSolenoid intakeSolenoid = new DoubleSolenoid(INTAKE_SOLENOID_A,INTAKE_SOLENOID_B);
+  private DoubleSolenoid intakeSolenoid = new DoubleSolenoid(21, INTAKE_SOLENOID_A,INTAKE_SOLENOID_B);
 
   public Intake() {
     //dont start spinning as soon as robot turned on.
     setDefaultCommand(new IntakeOff(this));
+    // retract();
   }
 
   /**

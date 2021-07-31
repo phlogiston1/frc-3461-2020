@@ -9,8 +9,10 @@ package frc.robot;
 
 import java.io.IOException;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,9 +23,11 @@ import frc.robot.commands.AutoAim;
 import frc.robot.commands.CarGameCheesyDrive;
 import frc.robot.commands.CheesyDrive;
 import frc.robot.commands.CycleBalls;
+import frc.robot.commands.FlywheelTuningCommand;
 import frc.robot.commands.IntakeOff;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeRetract;
+import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.auto.paths.PathBase;
 import frc.robot.commands.auto.paths.TestPath;
@@ -43,7 +47,9 @@ public class RobotContainer {
   private static final Limelight camera = new Limelight(Constants.TARGET_HEIGHT, Constants.CAMERA_HEIGHT);
   private static final Turret turret = new Turret();
   private static final Intake intake = new Intake();
+  private static final Shooter shooter = new Shooter();
   private static final BallHandling ballHandler = new BallHandling();
+  public static final Compressor compressor = new Compressor(21);
 
   private static RobotContainer instance;
 
@@ -64,6 +70,7 @@ public class RobotContainer {
     System.out.println("initializing robot container");
     configureButtonBindings();
     SmartDashboard.putData(driveChooser);
+    compressor.clearAllPCMStickyFaults();
   }
 
 
@@ -101,12 +108,14 @@ public class RobotContainer {
   JoystickButton intakeBtn = new JoystickButton(oprJoy, Constants.ButtonMappings.intakeOn);
   JoystickButton intakeUp = new JoystickButton(oprJoy, Constants.ButtonMappings.intakeUp);
   JoystickButton runTraversal = new JoystickButton(oprJoy, Constants.ButtonMappings.runBallFeed);
+  JoystickButton runFlywheel = new JoystickButton(oprJoy, Constants.ButtonMappings.autoAim);
   private void configureButtonBindings() {
     autoAimBtn.whileHeld(new AutoAim(turret, driveTrain, camera, robotState));
     intakeBtn.whenPressed(new IntakeOn(intake));
     intakeBtn.whenReleased(new IntakeOff(intake));
     intakeUp.whenPressed(new IntakeRetract(intake));
     runTraversal.whileHeld(new CycleBalls(ballHandler));
+    runFlywheel.whileHeld(new RunFlywheel(shooter));
   }
 
   public Joystick getOperatorJoystick() {

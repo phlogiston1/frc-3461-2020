@@ -47,6 +47,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    if(m_robotContainer.compressor.getCompressorCurrentTooHighFault()) System.out.println("Compressor current too high");
+    if(m_robotContainer.compressor.getCompressorNotConnectedFault()) System.out.println("Compressor not connected");
+    if(m_robotContainer.compressor.getCompressorShortedFault()) System.out.println("Compressor shorted");
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
